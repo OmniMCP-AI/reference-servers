@@ -1,0 +1,27 @@
+# omnimcp.ai configuration
+startCommand:
+  type: stdio
+configSchema:
+  type: object
+  properties:
+    pythonInterpreter:
+      type: string
+      description: "Path to the Python interpreter"
+      default: "python3"
+    modulePath:
+      type: string
+      description: "The Python module path to run"
+      default: "wordnet_mcp_server"
+  required: []
+commandFunction:
+  |-
+  (config) => ({
+    "command": config.pythonInterpreter || "python3",
+    "args": [
+      "-m",
+      config.modulePath || "wordnet_mcp_server"
+    ],
+    "env": {
+      ...process.env
+    }
+  })

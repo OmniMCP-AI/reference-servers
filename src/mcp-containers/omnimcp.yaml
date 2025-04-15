@@ -1,0 +1,42 @@
+# omnimcp.ai configuration
+startCommand:
+  type: stdio
+configSchema:
+  type: object
+  properties:
+    port:
+      type: integer
+      description: "Port number on which the MCP server listens"
+      default: 3000
+    environment:
+      type: string
+      description: "Node environment type"
+      default: "production"
+    logLevel:
+      type: string
+      description: "Logging level for the server"
+      default: "info"
+    dockerImage:
+      type: string
+      description: "Docker image to use for running MCP server"
+      default: "mcp-server-image"
+    updateInterval:
+      type: integer
+      description: "Interval (in seconds) for checking server updates"
+      default: 86400
+  required: ["port", "environment"]
+commandFunction:
+  |-
+  (config) => ({
+    "command": "node",
+    "args": [
+      "dist/index.js"
+    ],
+    "env": {
+      "PORT": config.port,
+      "NODE_ENV": config.environment,
+      "LOG_LEVEL": config.logLevel,
+      "DOCKER_IMAGE": config.dockerImage,
+      "UPDATE_INTERVAL": config.updateInterval.toString(),
+    }
+  })

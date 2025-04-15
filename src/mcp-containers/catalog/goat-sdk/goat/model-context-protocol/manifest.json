@@ -1,0 +1,43 @@
+{
+  "id": "model-context-protocol",
+  "fullId": "goat-sdk/goat/model-context-protocol",
+  "repo": {
+    "provider": "github.com",
+    "owner": "goat-sdk",
+    "repo": "goat",
+    "branch": "main",
+    "url": "https://github.com/goat-sdk/goat"
+  },
+  "config": {
+    "argumentsTemplate": null,
+    "configValues": [
+      {
+        "title": "wallet-private-key",
+        "description": null,
+        "default": null,
+        "required": false,
+        "fields": [
+          {
+            "type": "environment",
+            "key": "WALLET_PRIVATE_KEY"
+          }
+        ]
+      },
+      {
+        "title": "rpc-provider-url",
+        "description": null,
+        "default": null,
+        "required": false,
+        "fields": [
+          {
+            "type": "environment",
+            "key": "RPC_PROVIDER_URL"
+          }
+        ]
+      }
+    ]
+  },
+  "subdirectory": "typescript/examples/by-framework/model-context-protocol",
+  "title": "Goat SDK Model Context Protocol",
+  "description": "The leading agentic finance toolkit for AI agents"
+}

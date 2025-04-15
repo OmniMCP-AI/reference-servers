@@ -1,0 +1,64 @@
+
+# Playwright MCP Server 🎭
+
+A containerized version of "Playwright MCP Server 🎭"
+
+> Repository: [executeautomation/mcp-playwright](https://github.com/executeautomation/mcp-playwright)
+
+## Description
+
+A Model Context Protocol server that provides browser automation capabilities using Playwright. This server enables LLMs to interact with web pages, take screenshots, generate test code, web scraps the page and execute JavaScript in a real browser environment.
+
+
+## Usage
+
+The containers are built automatically and are available on the GitHub Container Registry.
+
+1. Pull the Docker image:
+
+```bash
+docker pull ghcr.io/metorial/mcp-container--executeautomation--mcp-playwright--mcp-playwright
+```
+
+2. Run the container:
+
+```bash
+docker run -it --rm ghcr.io/metorial/mcp-container--executeautomation--mcp-playwright--mcp-playwright 
+```
+
+- `--rm` removes the container after it exits, so you don't have to clean up manually.
+- `-it` allows you to interact with the container in your terminal.
+
+
+
+## Usage with Claude
+
+```json
+{
+  "mcpServers": {
+    "mcp-playwright": {
+      "command": "docker",
+      "args": [
+        "run",
+        "-it",
+        "--rm",
+        "ghcr.io/metorial/mcp-container--executeautomation--mcp-playwright--mcp-playwright"
+      ],
+      "env": {}
+    }
+  }
+}
+```
+
+# License
+
+Please refer to the license provided in [the project repository](https://github.com/executeautomation/mcp-playwright) for more information.
+
+## Contributing
+
+Contributions are welcome! If you notice any issues or have suggestions for improvements, please open an issue or submit a pull request.
+
+<div align="center">
+  <sub>Containerized with ❤️ by <a href="https://metorial.com">Metorial</a></sub>
+</div>
+  

@@ -1,0 +1,14 @@
+{
+  "name": "@metorial-mcp-containers/root",
+  "private": true,
+  "scripts": {
+    "add-server": "bun ./scripts/add-server/src/index.ts",
+    "build": "bun ./scripts/build/src/index.ts"
+  },
+  "devDependencies": {},
+  "packageManager": "yarn@1.22.19",
+  "workspaces": [
+    "scripts/*",
+    "packages/*"
+  ]
+}

@@ -1,0 +1,18 @@
+{
+  "id": "browserbase",
+  "fullId": "browserbase/mcp-server-browserbase/browserbase",
+  "repo": {
+    "provider": "github.com",
+    "owner": "browserbase",
+    "repo": "mcp-server-browserbase",
+    "branch": "main",
+    "url": "https://github.com/browserbase/mcp-server-browserbase"
+  },
+  "config": {
+    "argumentsTemplate": null,
+    "configValues": []
+  },
+  "subdirectory": "browserbase",
+  "title": "Browserbase MCP Server",
+  "description": "This server provides cloud browser automation capabilities using [Browserbase](https://www.browserbase.com/), [Puppeteer](https://pptr.dev/), and [Stagehand](https://github.com/browserbase/stagehand). This server enables LLMs to interact with web pages, take screenshots, and execute JavaScript in a cloud browser environment."
+}

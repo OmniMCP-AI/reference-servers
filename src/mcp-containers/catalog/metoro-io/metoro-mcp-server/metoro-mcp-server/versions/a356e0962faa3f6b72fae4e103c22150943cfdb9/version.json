@@ -1,0 +1,98 @@
+{
+  "serverId": "metoro-io/metoro-mcp-server/metoro-mcp-server",
+  "version": "a356e0962faa3f6b72fae4e103c22150943cfdb9",
+  "manifest": {
+    "id": "metoro-mcp-server",
+    "fullId": "metoro-io/metoro-mcp-server/metoro-mcp-server",
+    "repo": {
+      "provider": "github.com",
+      "owner": "metoro-io",
+      "repo": "metoro-mcp-server",
+      "branch": "main",
+      "url": "https://github.com/metoro-io/metoro-mcp-server"
+    },
+    "config": {
+      "argumentsTemplate": null,
+      "configValues": [
+        {
+          "title": "metoro-auth-token",
+          "description": null,
+          "default": null,
+          "required": false,
+          "fields": [
+            {
+              "type": "environment",
+              "key": "METORO_AUTH_TOKEN"
+            }
+          ]
+        },
+        {
+          "title": "metoro-api-url",
+          "description": null,
+          "default": null,
+          "required": false,
+          "fields": [
+            {
+              "type": "environment",
+              "key": "METORO_API_URL"
+            }
+          ]
+        }
+      ]
+    },
+    "subdirectory": "/",
+    "title": "metoro-mcp-server",
+    "description": "This repository contains th Metoro MCP (Model Context Protocol) Server. This MCP Server allows you to interact with your Kubernetes cluster via the Claude Desktop App!"
+  },
+  "manifestHash": "504633e7eaec6702e0f53a4bf3472309",
+  "createdAt": "2025-04-15T07:16:40.528Z",
+  "builder": [
+    {
+      "type": "nixpacks",
+      "plan": {
+        "providers": [],
+        "buildImage": "ghcr.io/railwayapp/nixpacks:ubuntu-1742861060",
+        "variables": {
+          "CGO_ENABLED": "0",
+          "NIXPACKS_METADATA": "go"
+        },
+        "phases": {
+          "build": {
+            "dependsOn": [
+              "install",
+              "setup"
+            ],
+            "cmds": [
+              "go build -o out"
+            ],
+            "cacheDirectories": [
+              "/root/.cache/go-build"
+            ]
+          },
+          "install": {
+            "dependsOn": [
+              "setup"
+            ],
+            "cmds": [
+              "go mod download"
+            ],
+            "cacheDirectories": [
+              "/root/.cache/go-build"
+            ]
+          },
+          "setup": {
+            "nixPkgs": [
+              "go_1_23"
+            ],
+            "nixOverlays": [],
+            "nixpkgsArchive": "05bbf675397d5366259409139039af8077d695ce"
+          }
+        },
+        "start": {
+          "cmd": "./out",
+          "runImage": "ubuntu:jammy"
+        }
+      }
+    }
+  ]
+}

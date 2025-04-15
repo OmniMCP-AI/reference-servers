@@ -1,0 +1,43 @@
+{
+  "id": "firefly-mcp",
+  "fullId": "gofireflyio/firefly-mcp/firefly-mcp",
+  "repo": {
+    "provider": "github.com",
+    "owner": "gofireflyio",
+    "repo": "firefly-mcp",
+    "branch": "main",
+    "url": "https://github.com/gofireflyio/firefly-mcp"
+  },
+  "config": {
+    "argumentsTemplate": null,
+    "configValues": [
+      {
+        "title": "firefly-access-key",
+        "description": null,
+        "default": null,
+        "required": false,
+        "fields": [
+          {
+            "type": "environment",
+            "key": "FIREFLY_ACCESS_KEY"
+          }
+        ]
+      },
+      {
+        "title": "firefly-secret-key",
+        "description": null,
+        "default": null,
+        "required": false,
+        "fields": [
+          {
+            "type": "environment",
+            "key": "FIREFLY_SECRET_KEY"
+          }
+        ]
+      }
+    ]
+  },
+  "subdirectory": "/",
+  "title": "Firefly MCP Server",
+  "description": "The Firefly MCP (Model Context Protocol) server is a TypeScript-based server that enables seamless integration with the Firefly platform. It allows you to discover, manage, and codify resources across your Cloud and SaaS accounts connected to Firefly."
+}

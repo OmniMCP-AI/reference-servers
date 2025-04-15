@@ -1,0 +1,104 @@
+{
+  "serverId": "gofireflyio/firefly-mcp/firefly-mcp",
+  "version": "cd9c3efe692a3fd0a22171389a4fa6c8d707882e",
+  "manifest": {
+    "id": "firefly-mcp",
+    "fullId": "gofireflyio/firefly-mcp/firefly-mcp",
+    "repo": {
+      "provider": "github.com",
+      "owner": "gofireflyio",
+      "repo": "firefly-mcp",
+      "branch": "main",
+      "url": "https://github.com/gofireflyio/firefly-mcp"
+    },
+    "config": {
+      "argumentsTemplate": null,
+      "configValues": [
+        {
+          "title": "firefly-access-key",
+          "description": null,
+          "default": null,
+          "required": false,
+          "fields": [
+            {
+              "type": "environment",
+              "key": "FIREFLY_ACCESS_KEY"
+            }
+          ]
+        },
+        {
+          "title": "firefly-secret-key",
+          "description": null,
+          "default": null,
+          "required": false,
+          "fields": [
+            {
+              "type": "environment",
+              "key": "FIREFLY_SECRET_KEY"
+            }
+          ]
+        }
+      ]
+    },
+    "subdirectory": "/",
+    "title": "Firefly MCP Server",
+    "description": "The Firefly MCP (Model Context Protocol) server is a TypeScript-based server that enables seamless integration with the Firefly platform. It allows you to discover, manage, and codify resources across your Cloud and SaaS accounts connected to Firefly."
+  },
+  "manifestHash": "26ba3df8cb10f15ad0576f6326aca5f7",
+  "createdAt": "2025-04-15T07:16:29.345Z",
+  "builder": [
+    {
+      "type": "nixpacks",
+      "plan": {
+        "providers": [],
+        "buildImage": "ghcr.io/railwayapp/nixpacks:ubuntu-1742861060",
+        "variables": {
+          "CI": "true",
+          "NIXPACKS_METADATA": "node",
+          "NODE_ENV": "production",
+          "NPM_CONFIG_PRODUCTION": "false"
+        },
+        "phases": {
+          "build": {
+            "dependsOn": [
+              "install"
+            ],
+            "cmds": [
+              "npm run build"
+            ],
+            "cacheDirectories": [
+              "node_modules/.cache"
+            ]
+          },
+          "install": {
+            "dependsOn": [
+              "setup"
+            ],
+            "cmds": [
+              "npm ci"
+            ],
+            "cacheDirectories": [
+              "/root/.npm"
+            ],
+            "paths": [
+              "/app/node_modules/.bin"
+            ]
+          },
+          "setup": {
+            "nixPkgs": [
+              "nodejs_22",
+              "npm-9_x"
+            ],
+            "nixOverlays": [
+              "https://github.com/railwayapp/nix-npm-overlay/archive/main.tar.gz"
+            ],
+            "nixpkgsArchive": "ffeebf0acf3ae8b29f8c7049cd911b9636efd7e7"
+          }
+        },
+        "start": {
+          "cmd": "npm run start"
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,76 @@
+{
+  "serverId": "chargebee/agentkit/modelcontextprotocol",
+  "version": "d67d82024c9817eb9f0902f56b4b9b43e08d03b1",
+  "manifest": {
+    "id": "modelcontextprotocol",
+    "fullId": "chargebee/agentkit/modelcontextprotocol",
+    "repo": {
+      "provider": "github.com",
+      "owner": "chargebee",
+      "repo": "agentkit",
+      "branch": "main",
+      "url": "https://github.com/chargebee/agentkit"
+    },
+    "config": {
+      "argumentsTemplate": null,
+      "configValues": []
+    },
+    "subdirectory": "modelcontextprotocol",
+    "title": "Chargebee Model Context Protocol (MCP) Server",
+    "description": "Model Context Protocol (MCP) is a [standardized protocol](https://modelcontextprotocol.io/introduction) designed to manage context between large language models (LLMs) and external systems."
+  },
+  "manifestHash": "f4ea93ee13bc45cc681e781ce670ab7d",
+  "createdAt": "2025-04-15T07:16:22.259Z",
+  "builder": [
+    {
+      "type": "nixpacks",
+      "plan": {
+        "providers": [],
+        "buildImage": "ghcr.io/railwayapp/nixpacks:ubuntu-1742861060",
+        "variables": {
+          "CI": "true",
+          "NIXPACKS_METADATA": "node",
+          "NODE_ENV": "production",
+          "NPM_CONFIG_PRODUCTION": "false"
+        },
+        "phases": {
+          "build": {
+            "dependsOn": [
+              "install"
+            ],
+            "cmds": [
+              "pnpm run build"
+            ],
+            "cacheDirectories": [
+              "node_modules/.cache"
+            ]
+          },
+          "install": {
+            "dependsOn": [
+              "setup"
+            ],
+            "cmds": [
+              "pnpm i --frozen-lockfile"
+            ],
+            "cacheDirectories": [
+              "/root/.local/share/pnpm/store/v3"
+            ],
+            "paths": [
+              "/app/node_modules/.bin"
+            ]
+          },
+          "setup": {
+            "nixPkgs": [
+              "nodejs_22",
+              "pnpm-9_x"
+            ],
+            "nixOverlays": [
+              "https://github.com/railwayapp/nix-npm-overlay/archive/main.tar.gz"
+            ],
+            "nixpkgsArchive": "ffeebf0acf3ae8b29f8c7049cd911b9636efd7e7"
+          }
+        }
+      }
+    }
+  ]
+}

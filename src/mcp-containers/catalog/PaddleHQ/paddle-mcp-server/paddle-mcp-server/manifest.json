@@ -1,0 +1,42 @@
+{
+  "id": "paddle-mcp-server",
+  "fullId": "PaddleHQ/paddle-mcp-server/paddle-mcp-server",
+  "repo": {
+    "provider": "github.com",
+    "owner": "PaddleHQ",
+    "repo": "paddle-mcp-server",
+    "branch": "main",
+    "url": "https://github.com/PaddleHQ/paddle-mcp-server"
+  },
+  "config": {
+    "configValues": [
+      {
+        "title": "Paddle API Key",
+        "description": null,
+        "default": null,
+        "required": false,
+        "fields": [
+          {
+            "type": "cli",
+            "key": "--api-key"
+          }
+        ]
+      },
+      {
+        "title": "Paddle Environment",
+        "description": null,
+        "default": null,
+        "required": false,
+        "fields": [
+          {
+            "type": "cli",
+            "key": "--environment"
+          }
+        ]
+      }
+    ]
+  },
+  "subdirectory": "/",
+  "title": "MCP Server for Paddle Billing",
+  "description": "This is a [Model Context Protocol (MCP)](https://modelcontextprotocol.io/introduction) server that provides tools for interacting with the Paddle API."
+}

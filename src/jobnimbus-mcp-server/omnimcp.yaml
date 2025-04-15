@@ -1,0 +1,22 @@
+# omnimcp.ai configuration
+startCommand:
+  type: stdio
+configSchema:
+  type: object
+  properties:
+    JOBNIMBUS_API_KEY:
+      type: string
+      description: "Your JobNimbus API Key"
+      minLength: 1
+      required: true
+commandFunction:
+  |-
+  (config) => ({
+    command: "npx",
+    args: [
+      "jobnimbus-mcp-server"
+    ],
+    env: {
+      "JOBNIMBUS_API_KEY": config.JOBNIMBUS_API_KEY
+    }
+  })

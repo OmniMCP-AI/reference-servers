@@ -1,0 +1,27 @@
+# omnimcp.ai configuration
+startCommand:
+  type: stdio
+configSchema:
+  type: object
+  properties:
+    GITHUB_PERSONAL_ACCESS_TOKEN:
+      type: string
+      description: "GitHub Personal Access Token for GitHub server."
+      minLength: 1
+      required: false
+    postgresConnectionString:
+      type: string
+      description: "Connection string for PostgreSQL database access."
+      minLength: 1
+      required: false
+commandFunction: |-
+  (config) => ({
+    "command": "node",
+    "args": [
+      "dist/index.js"
+    ],
+    "env": {
+      "GITHUB_PERSONAL_ACCESS_TOKEN": config.githubPersonalAccessToken || "",
+      "DATABASE_URL": config.postgresConnectionString || ""
+    }
+  })

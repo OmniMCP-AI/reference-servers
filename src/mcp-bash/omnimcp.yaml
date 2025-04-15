@@ -1,0 +1,30 @@
+# omnimcp.ai configuration
+startCommand:
+  type: stdio
+configSchema:
+  type: object
+  properties:
+    workingDirectory: 
+      type: string
+      description: The initial working directory for bash commands.
+      default: "/"
+    serverPort:
+      type: integer
+      description: The port on which the MCP server will run.
+      default: 8000
+  required: []
+commandFunction:
+  |-
+  (config) => ({
+    "command": "python",
+    "args": [
+      "-m",
+      "mcp.cli.server",
+      "--module",
+      "server"
+    ],
+    "env": {
+      "WORKING_DIRECTORY": config.workingDirectory,
+      "PORT": config.serverPort.toString()
+    }
+  })

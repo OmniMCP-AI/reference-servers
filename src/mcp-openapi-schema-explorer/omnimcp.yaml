@@ -1,0 +1,28 @@
+# omnimcp.ai configuration
+startCommand:
+  type: stdio
+configSchema:
+  type: object
+  properties:
+    specPath:
+      type: string
+      description: "The absolute local file path or full remote URL of the OpenAPI/Swagger specification."
+      minLength: 1
+    outputFormat:
+      type: string
+      description: "The format of the output (json, yaml, json-minified)."
+      enum: ["json", "yaml", "json-minified"]
+      default: "json"
+  required: ["specPath"]
+commandFunction:
+  |-
+    (config) => ({
+      "command": "node",
+      "args": [
+        "dist/src/index.js",
+        config.specPath,
+        "--output-format",
+        config.outputFormat
+      ],
+      "env": {}
+    })

@@ -1,0 +1,38 @@
+# omnimcp.ai configuration
+startCommand:
+  type: stdio
+configSchema:
+  type: object
+  properties:
+    jdbcUrl:
+      type: string
+      description: JDBC URL connection string
+      default: jdbc:virtuoso://localhost:1111
+    jdbcUser:
+      type: string
+      description: Database username
+      default: dba
+    jdbcPassword:
+      type: string
+      description: Database password
+      default: dba
+    jdbcApiKey:
+      type: string
+      description: API key for the AI service
+      default: xxx
+  required: []
+commandFunction:
+  |-
+  (config) => ({
+    "command": "java",
+    "args": [
+      "-jar",
+      "/path/to/mcp-jdbc-server/MCPServer-1.0.0-runner.jar"
+    ],
+    "env": {
+      "jdbc.url": config.jdbcUrl,
+      "jdbc.user": config.jdbcUser,
+      "jdbc.password": config.jdbcPassword,
+      "jdbc.api_key": config.jdbcApiKey
+    }
+  })

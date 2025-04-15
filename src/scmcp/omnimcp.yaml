@@ -1,0 +1,34 @@
+# omnimcp.ai configuration
+startCommand:
+  type: stdio
+configSchema:
+  type: object
+  properties:
+    transport:
+      type: string
+      description: "The transport method for the server, e.g., 'sse'."
+      enum: ["stdio", "sse"]
+      default: "stdio"
+    port:
+      type: integer
+      description: "The port number for remote server access."
+      minimum: 1
+      maximum: 65535
+      default: 8000
+  required: []
+commandFunction:
+  |-
+  (config) => {
+    let args = ["run"];
+    if (config.transport === "sse") {
+      args.push("--transport", "sse");
+      if (config.port) {
+        args.push("--port", config.port.toString());
+      }
+    }
+    return {
+      "command": "scmcp",
+      "args": args,
+      "env": {}
+    };
+  }

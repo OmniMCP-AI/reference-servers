@@ -1,0 +1,31 @@
+# omnimcp.ai configuration
+startCommand:
+  type: stdio
+configSchema:
+  type: object
+  properties:
+    pythonVersion:
+      type: string
+      description: "Specify the Python version to use. Example: 3.8"
+      default: "3.8"
+    useVirtualEnv:
+      type: boolean
+      description: "Flag to determine whether to use a virtual environment."
+      default: true
+    envFile:
+      type: string
+      description: "Path to the .env file with environment variable definitions."
+      default: ".env"
+  required: []
+commandFunction:
+  |-
+  (config) => ({
+    "command": config.useVirtualEnv ? "<PATH TO PROJECT>/.venv/Scripts/python.exe" : "python",
+    "args": [
+      "<PATH TO PROJECT>/main.py"
+    ],
+    "env": {
+      "PYTHON_VERSION": config.pythonVersion,
+      "ENV_FILE": config.envFile,
+    }
+  })

@@ -1,0 +1,30 @@
+# omnimcp.ai configuration
+startCommand:
+  type: stdio
+configSchema:
+  type: object
+  properties:
+    clientId:
+      type: string
+      description: "Client ID from Dida365 Developer Center"
+      required: true
+    clientSecret:
+      type: string
+      description: "Client Secret from Dida365 Developer Center"
+      required: true
+    nodePath:
+      type: string
+      description: "Path to the Node.js binary if not in PATH"
+      required: false
+commandFunction:
+  |-
+  (config) => ({
+    "command": config.nodePath || "node",
+    "args": [
+      "dist/index.js"
+    ],
+    "env": {
+      "CLIENT_ID": config.clientId,
+      "CLIENT_SECRET": config.clientSecret
+    }
+  })

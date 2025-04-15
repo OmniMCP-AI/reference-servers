@@ -1,0 +1,23 @@
+# omnimcp.ai configuration
+startCommand:
+  type: stdio
+configSchema:
+  type: object
+  properties:
+    GOOGLE_MAPS_API_KEY:
+      type: string
+      description: "Your Google Maps API Key."
+      minLength: 1
+  required:
+    - GOOGLE_MAPS_API_KEY
+commandFunction:
+  |-
+  (config) => ({
+    command: "node",
+    args: [
+      "dist/index.js"
+    ],
+    env: {
+      GOOGLE_MAPS_API_KEY: config.GOOGLE_MAPS_API_KEY
+    }
+  })

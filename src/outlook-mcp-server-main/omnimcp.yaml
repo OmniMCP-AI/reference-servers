@@ -1,0 +1,36 @@
+# omnimcp.ai configuration
+startCommand:
+  type: stdio
+configSchema:
+  type: object
+  properties:
+    operatingSystem:
+      type: string
+      description: "Operating system where the server will run. Must be 'Windows'."
+      enum: ['Windows']
+    pythonVersion:
+      type: string
+      description: "Python version required to run the server. Must be 3.10 or later."
+      pattern: "^3\.1[0-9]|3\.[2-9][0-9]|[4-9]\.[0-9]+$"
+    outlookConfig:
+      type: boolean
+      description: "Indicates if Microsoft Outlook is installed and configured with an active account."
+    mcpClient:
+      type: string
+      description: "MCP-compatible client to configure and use with this server, such as Claude Desktop."
+  required:
+    - operatingSystem
+    - pythonVersion
+    - outlookConfig
+commandFunction:
+  |-
+  (config) => ({
+    "command": "python",
+    "args": [
+      "outlook_mcp_server.py"
+    ],
+    "env": {
+      "OUTLOOK_CONFIG": config.outlookConfig,
+      "MCP_CLIENT": config.mcpClient
+    }
+  })

@@ -1,0 +1,26 @@
+# Define how the MCP server should start
+startCommand:
+  type: stdio
+  configSchema:
+    latitude:
+      type: string
+      description: "Latitude for weather query"
+      required: true
+    longitude:
+      type: string
+      description: "Longitude for weather query"
+      required: true
+  commandFunction:
+    # A function that produces the CLI command to start the MCP on stdio
+    |- 
+    (config) => ({
+      "command": "uv",
+      "args": [
+        "run",
+        "server.py"
+      ],
+      "env": {
+        "LATITUDE": config.latitude,
+        "LONGITUDE": config.longitude
+      }
+    })

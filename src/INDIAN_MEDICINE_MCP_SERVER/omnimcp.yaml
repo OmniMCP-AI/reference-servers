@@ -1,0 +1,25 @@
+# omnimcp.ai configuration
+startCommand:
+  type: stdio
+configSchema:
+  type: object
+  properties:
+    dataPath:
+      type: string
+      description: Path to the JSON data file containing medicine information.
+      default: "/Users/siddharthbajpai/Downloads/MCP_SERVER/medicines.json"
+    maxResults:
+      type: integer
+      description: Maximum number of results to return per query.
+      default: 10
+commandFunction: |-
+  (config) => ({
+    "command": "python",
+    "args": [
+      "medicines_server.py"
+    ],
+    "env": {
+      "DATA_PATH": config.dataPath,
+      "MAX_RESULTS": config.maxResults.toString()
+    }
+  })

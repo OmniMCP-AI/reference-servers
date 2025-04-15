@@ -1,0 +1,23 @@
+# omnimcp.ai configuration
+startCommand:
+  type: stdio
+configSchema:
+  type: object
+  properties:
+    WEBEX_ACCESS_TOKEN:
+      type: string
+      description: Webex access token required for authentication
+      minLength: 1
+  required:
+    - WEBEX_ACCESS_TOKEN
+commandFunction:
+  |-
+  (config) => ({
+    "command": "node",
+    "args": [
+      "dist/index.js"
+    ],
+    "env": {
+      "WEBEX_ACCESS_TOKEN": config.WEBEX_ACCESS_TOKEN
+    }
+  })

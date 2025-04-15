@@ -1,0 +1,46 @@
+# omnimcp.ai configuration
+startCommand:
+  type: stdio
+configSchema:
+  type: object
+  properties:
+    audacityCommandPipePath:
+      type: string
+      description: The path to the named command pipe for Audacity.
+      default: "/tmp/audacity_script_pipe.to"
+    audacityResponsePipePath:
+      type: string
+      description: The path to the named response pipe for Audacity.
+      default: "/tmp/audacity_script_pipe.from"
+    pythonInterpreter:
+      type: string
+      description: Path to the Python interpreter.
+      default: "python3.13"
+    uvToolPath:
+      type: string
+      description: Absolute path to the uv tool binary.
+      default: "/%absolute_path_to_ev%/.local/bin/uv"
+    projectDirectory:
+      type: string
+      description: The directory containing the MCP project files.
+      default: "/path/to/mcp-audacity"
+  required:
+    - audacityCommandPipePath
+    - audacityResponsePipePath
+    - pythonInterpreter
+    - uvToolPath
+    - projectDirectory
+commandFunction:
+  |-
+  (config) => ({
+    "command": config.uvToolPath,
+    "args": [
+      "--directory",
+      config.projectDirectory,
+      "run",
+      "audacity_mcp_pipe.py"
+    ],
+    "env": {
+      "PYTHONPATH": config.pythonInterpreter,
+    }
+  })

@@ -1,0 +1,30 @@
+# omnimcp.ai configuration
+startCommand:
+  type: stdio
+configSchema:
+  type: object
+  properties:
+    logDir:
+      type: string
+      description: The directory where logs should be stored
+      default: "/path/to/your/vsc-mcp/logs"
+    allowedDirectories:
+      type: string
+      description: A comma-separated list of directories where file operations are permitted
+      default: "/path/to/your/vsc-mcp"
+  required:
+    - logDir
+    - allowedDirectories
+
+commandFunction:
+  |-
+  (config) => ({
+    "command": "bun",
+    "args": [
+      "/path/to/your/vsc-mcp/src/index.ts"
+    ],
+    "env": {
+      "LOG_DIR": config.logDir,
+      "ALLOWED_DIRECTORIES": config.allowedDirectories
+    }
+  })

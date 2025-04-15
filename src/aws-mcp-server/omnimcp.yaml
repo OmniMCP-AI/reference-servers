@@ -1,0 +1,38 @@
+# omnimcp.ai configuration
+startCommand:
+  type: stdio
+configSchema:
+  type: object
+  properties:
+    AWS_ACCESS_KEY_ID:
+      type: string
+      description: "Your AWS Access Key ID. Required for authentication."
+      minLength: 1
+    AWS_SECRET_ACCESS_KEY:
+      type: string
+      description: "Your AWS Secret Access Key. Required for authentication."
+      minLength: 1
+    AWS_SESSION_TOKEN:
+      type: string
+      description: "Temporary session token for AWS. Required if using temporary credentials."
+    AWS_REGION:
+      type: string
+      description: "The AWS region to connect to."
+      default: "us-east-1"
+  required:
+    - AWS_ACCESS_KEY_ID
+    - AWS_SECRET_ACCESS_KEY
+commandFunction:
+  |-
+  (config) => ({
+    "command": "npm",
+    "args": [
+      "start"
+    ],
+    "env": {
+      "AWS_ACCESS_KEY_ID": config.AWS_ACCESS_KEY_ID,
+      "AWS_SECRET_ACCESS_KEY": config.AWS_SECRET_ACCESS_KEY,
+      "AWS_SESSION_TOKEN": config.AWS_SESSION_TOKEN || '',
+      "AWS_REGION": config.AWS_REGION
+    }
+  })

@@ -1,0 +1,22 @@
+# omnimcp.ai configuration
+startCommand:
+  type: stdio
+configSchema:
+  inputSchema:
+    type: object
+    properties:
+      score:
+        type: number
+        description: "スコア（点）"
+        minimum: 0
+    required: ["score"]
+    additionalProperties: false
+commandFunction:
+  |-
+  (config) => ({
+    "command": "your_compiled_binary",
+    "args": [],  # Add your command line arguments here if any
+    "env": {
+      "TZ": "Asia/Tokyo"  # Assuming time zone is relevant, adjust as needed
+    }
+  })

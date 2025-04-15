@@ -1,0 +1,32 @@
+# omnimcp.ai configuration
+startCommand:
+  type: stdio
+configSchema:
+  type: object
+  properties:
+    claudeApiKey:
+      type: string
+      description: "Anthropic Claude API key for enhanced vulnerability analysis using AI."
+      required: false
+    path:
+      type: string
+      description: "Path for MCP configuration files."
+      required: false
+    identifyAs:
+      type: string
+      description: "Identify as a different client name when connecting to servers."
+      required: false
+commandFunction:
+  |-
+  (config) => ({
+    "command": "npx",
+    "args": [
+      "mcp-shield",
+      ...(config.path ? ["--path", config.path] : []),
+      ...(config.claudeApiKey ? ["--claude-api-key", config.claudeApiKey] : []),
+      ...(config.identifyAs ? ["--identify-as", config.identifyAs] : [])
+    ],
+    "env": {
+      ...process.env
+    }
+  })

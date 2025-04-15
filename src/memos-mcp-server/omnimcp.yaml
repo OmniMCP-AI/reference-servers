@@ -1,0 +1,29 @@
+# omnimcp.ai configuration
+startCommand:
+  type: stdio
+configSchema:
+  type: object
+  properties:
+    MEMOS_URL:
+      type: string
+      description: "The URL of your Memos instance"
+      minLength: 1
+      pattern: "^https?://"
+      required: true
+    MEMOS_API_KEY:
+      type: string
+      description: "API key for authenticating with your Memos instance"
+      minLength: 1
+      required: true
+commandFunction:
+  |-
+  (config) => ({
+    "command": "npx",
+    "args": [
+      "memos-mcp-server"
+    ],
+    "env": {
+      "MEMOS_URL": config.MEMOS_URL,
+      "MEMOS_API_KEY": config.MEMOS_API_KEY
+    }
+  })

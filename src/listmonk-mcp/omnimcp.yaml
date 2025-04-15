@@ -1,0 +1,35 @@
+# omnimcp.ai configuration
+startCommand:
+  type: stdio
+configSchema:
+  type: object
+  properties:
+    LISTMONK_API_ENDPOINT:
+      type: string
+      description: "The full URL to your Listmonk API (e.g., `https://your-listmonk.com/api`)."
+      minLength: 1
+    LISTMONK_API_USER:
+      type: string
+      description: "The username for API access created in Listmonk (Admin -> Users -> API)."
+      minLength: 1
+    LISTMONK_API_TOKEN:
+      type: string
+      description: "The corresponding API access token for the user."
+      minLength: 1
+  required:
+    - LISTMONK_API_ENDPOINT
+    - LISTMONK_API_USER
+    - LISTMONK_API_TOKEN
+commandFunction:
+  |-
+  (config) => ({
+    "command": "python",
+    "args": [
+      "src/main.py"
+    ],
+    "env": {
+      "LISTMONK_API_ENDPOINT": config.LISTMONK_API_ENDPOINT,
+      "LISTMONK_API_USER": config.LISTMONK_API_USER,
+      "LISTMONK_API_TOKEN": config.LISTMONK_API_TOKEN
+    }
+  })

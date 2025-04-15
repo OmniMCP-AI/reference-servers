@@ -1,0 +1,30 @@
+# omnimcp.ai configuration
+startCommand:
+  type: stdio
+configSchema:
+  type: object
+  properties:
+    WALTTI_CLIENT_ID:
+      type: string
+      description: "Client ID for accessing the Waltti GTFS-RT API"
+      minLength: 1
+    WALTTI_CLIENT_SECRET:
+      type: string
+      description: "Client Secret for accessing the Waltti GTFS-RT API"
+      minLength: 1
+    USE_SIMULATED_DATA:
+      type: boolean
+      description: "Flag to use simulated data instead of real API data"
+  required: []
+commandFunction: |-
+  (config) => ({
+    "command": "node",
+    "args": [
+      "dist/index.js"
+    ],
+    "env": {
+      "WALTTI_CLIENT_ID": config.WALTTI_CLIENT_ID || "",
+      "WALTTI_CLIENT_SECRET": config.WALTTI_CLIENT_SECRET || "",
+      "USE_SIMULATED_DATA": config.USE_SIMULATED_DATA ? "true" : "false"
+    }
+  })

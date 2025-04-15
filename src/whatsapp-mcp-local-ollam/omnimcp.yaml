@@ -1,0 +1,36 @@
+# omnimcp.ai configuration
+startCommand:
+  type: stdio
+configSchema:
+  type: object
+  properties:
+    pythonPath:
+      type: string
+      description: Path to the Python executable
+      default: python
+    goPath:
+      type: string
+      description: Path to Go executable
+      default: go
+    enableCGO:
+      type: boolean
+      description: Enable CGO for WhatsApp bridge
+      default: true
+    msys2Path:
+      type: string
+      description: Path to MSYS2 for C compiler
+      default: C:/msys64/mingw64/bin
+  required: ["pythonPath", "goPath"]
+commandFunction:
+  |-
+    (config) => ({
+      "command": config.goPath,
+      "args": [
+        "run",
+        "main.go"
+      ],
+      "env": {
+        "PATH": `${process.env.PATH};${config.msys2Path}`,
+        "CGO_ENABLED": config.enableCGO ? "1" : "0",
+      }
+    })

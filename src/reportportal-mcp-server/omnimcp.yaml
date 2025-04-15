@@ -1,0 +1,37 @@
+# omnimcp.ai configuration
+startCommand:
+  type: stdio
+configSchema:
+  type: object
+  properties:
+    RP_HOST:
+      type: string
+      description: ReportPortal host URL
+      minLength: 1
+    RP_PROJECT:
+      type: string
+      description: ReportPortal project name
+      minLength: 1
+    RP_TOKEN:
+      type: string
+      description: ReportPortal API token
+      minLength: 1
+    MCP_PORT:
+      type: integer
+      description: Port to run the MCP server on
+      default: 4389
+  required:
+    - RP_HOST
+    - RP_PROJECT
+    - RP_TOKEN
+commandFunction: |-
+  (config) => ({
+    "command": "./reportportal-mcp-server",
+    "args": [],
+    "env": {
+      "RP_HOST": config.RP_HOST,
+      "RP_PROJECT": config.RP_PROJECT,
+      "RP_TOKEN": config.RP_TOKEN,
+      "MCP_PORT": config.MCP_PORT.toString()
+    }
+  })

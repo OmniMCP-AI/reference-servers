@@ -1,0 +1,58 @@
+# omnimcp.ai configuration
+startCommand:
+  type: stdio
+configSchema:
+  type: object
+  properties:
+    PORT:
+      type: integer
+      description: "Server port number where the MCP will run."
+      default: 3000
+    PAYCHEX_API_KEY:
+      type: string
+      description: "API key for accessing Paychex services."
+      minLength: 1
+    PAYCHEX_CLIENT_ID:
+      type: string
+      description: "Client ID for Paychex API authentication."
+      minLength: 1
+    PAYCHEX_CLIENT_SECRET:
+      type: string
+      description: "Client secret for Paychex API authentication."
+      minLength: 1
+    LLM_TYPE:
+      type: string
+      description: "Type of LLM provider being used (e.g., openai, anthropic, azure)."
+      enum: ["openai", "anthropic", "azure"]
+      default: "openai"
+    LLM_API_KEY:
+      type: string
+      description: "API key for the selected LLM provider."
+      minLength: 1
+    OPENAI_API_KEY:
+      type: string
+      description: "API key for OpenAI services."
+      minLength: 1
+    ANTHROPIC_API_KEY:
+      type: string
+      description: "API key for Anthropic services."
+      minLength: 1
+  required: ["PAYCHEX_API_KEY", "PAYCHEX_CLIENT_ID", "PAYCHEX_CLIENT_SECRET", "LLM_API_KEY"]
+commandFunction:
+  |-
+  (config) => ({
+    "command": "node",
+    "args": [
+      "dist/index.js"
+    ],
+    "env": {
+      "PORT": config.PORT,
+      "PAYCHEX_API_KEY": config.PAYCHEX_API_KEY,
+      "PAYCHEX_CLIENT_ID": config.PAYCHEX_CLIENT_ID,
+      "PAYCHEX_CLIENT_SECRET": config.PAYCHEX_CLIENT_SECRET,
+      "LLM_TYPE": config.LLM_TYPE,
+      "LLM_API_KEY": config.LLM_API_KEY,
+      "OPENAI_API_KEY": config.OPENAI_API_KEY,
+      "ANTHROPIC_API_KEY": config.ANTHROPIC_API_KEY
+    }
+  })

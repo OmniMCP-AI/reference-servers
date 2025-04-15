@@ -1,0 +1,33 @@
+# omnimcp.ai configuration
+startCommand:
+  type: stdio
+configSchema:
+  type: object
+  properties:
+    databasePath:
+      type: string
+      description: "The file path to the SQLite database."
+      required: true
+    allowDropTables:
+      type: boolean
+      description: "Flag to allow dropping tables in the database."
+      required: false
+    maxQueryTime:
+      type: number
+      description: "Maximum amount of time in seconds a query is allowed to run."
+      required: false
+  required:
+    - databasePath
+commandFunction:
+  |-
+  (config) => ({
+    "command": "node",
+    "args": [
+      "dist/index.js"
+    ],
+    "env": {
+      "DATABASE_PATH": config.databasePath,
+      "ALLOW_DROP_TABLES": config.allowDropTables ? "true" : "false",
+      "MAX_QUERY_TIME": config.maxQueryTime ? config.maxQueryTime.toString() : "60"
+    }
+  })

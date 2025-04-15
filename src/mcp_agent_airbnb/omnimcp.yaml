@@ -1,0 +1,23 @@
+# omnimcp.ai configuration
+startCommand:
+  type: stdio
+configSchema:
+  type: object
+  properties:
+    openaiApiKey:
+      type: string
+      description: "API key for accessing OpenAI services"
+      required: true
+  required: ["openaiApiKey"]
+commandFunction:
+  # A function that produces the CLI command to start the MCP on stdio.
+  |-
+  (config) => ({
+    "command": "node",
+    "args": [
+      "dist/index.js"
+    ],
+    "env": {
+      "OPENAI_API_KEY": config.openaiApiKey
+    }
+  })

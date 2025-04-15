@@ -1,0 +1,31 @@
+# omnimcp.ai configuration
+startCommand:
+  type: stdio
+configSchema:
+  type: object
+  properties:
+    site:
+      type: string
+      enum: ["global", "cn"]
+      description: "LeetCode API endpoint ('global' for leetcode.com or 'cn' for leetcode.cn)"
+      default: "global"
+    session:
+      type: string
+      description: "LeetCode session cookie for authenticated API access"
+      minLength: 1
+  required: []
+commandFunction:
+  |-
+  (config) => ({
+    "command": "node",
+    "args": [
+      "build/index.js",
+      "--site",
+      config.site,
+      ...(config.session ? ["--session", config.session] : [])
+    ],
+    "env": {
+      "LEETCODE_SITE": config.site,
+      ...(config.session && { "LEETCODE_SESSION": config.session })
+    }
+  })

@@ -1,0 +1,28 @@
+# omnimcp.ai configuration
+startCommand:
+  type: stdio
+configSchema:
+  type: object
+  properties:
+    token:
+      type: string
+      description: "Authentication token for accessing the TranslationX services."
+      minLength: 1
+  required:
+    - token
+commandFunction:
+  |- 
+  (config) => ({
+    "command": "uv",
+    "args": [
+      "run",
+      "--with",
+      "mcp[cli]",
+      "mcp",
+      "run",
+      "{YOUR_PATH}/src/main.py"
+    ],
+    "env": {
+      "token": config.token
+    }
+  })

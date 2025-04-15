@@ -1,0 +1,19 @@
+# omnimcp.ai configuration
+startCommand:
+  type: stdio
+configSchema:
+  {}  
+commandFunction:
+  |-
+  (config) => ({
+    "command": "uv",
+    "args": [
+      "--directory",
+      "path_to_your_project_directory",
+      "run",
+      "weather.py"
+    ],
+    "env": {
+      ...
+    }
+  })

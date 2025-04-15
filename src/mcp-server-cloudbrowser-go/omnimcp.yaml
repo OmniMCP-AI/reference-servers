@@ -1,0 +1,18 @@
+# omnimcp.ai configuration
+startCommand:
+  type: stdio
+configSchema:
+  type: object
+  properties:
+    executablePath:
+      type: string
+      description: "The path to the built server executable."
+      default: "D:\\mcp-server-cloudbrowser-go\\mcp-server-cloudbrowser-go.exe"
+      required: true
+commandFunction:
+  |-
+  (config) => ({
+    "command": config.executablePath,
+    "args": [],
+    "env": {}
+  })

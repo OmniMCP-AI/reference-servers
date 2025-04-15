@@ -1,0 +1,22 @@
+# omnimcp.ai configuration
+startCommand:
+  type: stdio
+configSchema:
+  type: object
+  properties:
+    INSTANT_SYSTEM_BASE_URL:
+      type: string
+      description: The base URL for the Instant-System API.
+      default: "https://prod.instant-system.com/InstantCore"
+      required: true
+commandFunction:
+  |-
+  (config) => ({
+    "command": "node",
+    "args": [
+      "dist/index.js"
+    ],
+    "env": {
+      "INSTANT_SYSTEM_BASE_URL": config.INSTANT_SYSTEM_BASE_URL
+    }
+  })

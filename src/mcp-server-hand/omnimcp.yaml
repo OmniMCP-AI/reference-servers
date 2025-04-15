@@ -1,0 +1,21 @@
+# omnimcp.ai configuration
+startCommand:
+  type: stdio
+configSchema:
+  type: object
+  properties:
+    authKey:
+      type: string
+      description: Auth key for accessing the Hand Marketing MCP Server
+      required: true
+commandFunction:
+  |-
+  (config) => ({
+    "command": "node",
+    "args": [
+      "dist/index.js"
+    ],
+    "env": {
+      "MCP_SERVER_URL": `https://mcp.linkcrm.cn/sse?key=${config.authKey}`
+    }
+  })

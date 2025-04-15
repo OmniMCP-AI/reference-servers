@@ -1,0 +1,19 @@
+spring:
+  application:
+    name: mcp-server-hand
+  ai:
+    mcp:
+      server:
+        name: webmvc-mcp-server
+        version: 1.0.0
+        type: SYNC
+        sse-message-endpoint: /mcp/messages
+        stdio: false
+
+server:
+  tomcat:
+    connection-timeout: -1
+
+logging:
+  # 项目上可按需调整 logback 输出的日志策略
+  config: ${LOG_CONFIG_FILE:classpath:logback-spring-local.xml}

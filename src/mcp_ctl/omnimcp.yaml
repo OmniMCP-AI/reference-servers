@@ -1,0 +1,35 @@
+# omnimcp.ai configuration
+startCommand:
+  type: stdio
+configSchema:
+  type: object
+  properties:
+    server_name:
+      type: string
+      description: "The name of the MCP server to manage"
+      minLength: 1
+    node_path:
+      type: string
+      description: "The path to the Node.js executable"
+      minLength: 1
+    npm_path:
+      type: string
+      description: "The path to the npm executable"
+      minLength: 1
+  required:
+    - server_name
+    - node_path
+    - npm_path
+commandFunction:
+  |-
+  (config) => ({
+    "command": config.node_path,
+    "args": [
+      "dist/index.js",
+      config.server_name
+    ],
+    "env": {
+      "NODE_ENV": "production",
+      "PATH": process.env.PATH
+    }
+  })

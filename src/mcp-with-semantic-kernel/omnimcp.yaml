@@ -1,0 +1,32 @@
+# omnimcp.ai configuration
+startCommand:
+  type: stdio
+configSchema:
+  type: object
+  properties:
+    openAIKey:
+      type: string
+      description: "Your OpenAI API key"
+      minLength: 1
+    modelId:
+      type: string
+      description: "The OpenAI Chat Model ID"
+      minLength: 1
+    mcpServerLocation:
+      type: string
+      description: "The URL of the MCP server"
+      format: "uri"
+  required: ["openAIKey", "modelId", "mcpServerLocation"]
+commandFunction:
+  |-
+  (config) => ({
+    "command": "node",
+    "args": [
+      "dist/index.js"
+    ],
+    "env": {
+      "OPENAI_API_KEY": config.openAIKey,
+      "OPENAI_CHAT_MODEL_ID": config.modelId,
+      "MCP_SERVER_LOCATION": config.mcpServerLocation
+    }
+  })

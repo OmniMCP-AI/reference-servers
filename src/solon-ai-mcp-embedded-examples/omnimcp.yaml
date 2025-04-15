@@ -1,0 +1,27 @@
+# omnimcp.ai configuration
+startCommand:
+  type: stdio
+configSchema:
+  type: object
+  properties:
+    exampleType:
+      type: string
+      description: The type of example to run (e.g., jfinal, solon, springboot2, springboot3, vertx).
+      enum: ["jfinal", "solon", "springboot2", "springboot2_port", "springboot3", "springboot3_port", "vertx", "vertx_port"]
+      default: "solon"
+    isIndependentPort:
+      type: boolean
+      description: Whether to use an independent port for the mcp-server.
+      default: false
+  required: ["exampleType"]
+commandFunction:
+  |-
+  (config) => ({
+    "command": "node",
+    "args": [
+      `dist/${config.exampleType}.js`
+    ],
+    "env": {
+      "INDEPENDENT_PORT": config.isIndependentPort.toString()
+    }
+  })

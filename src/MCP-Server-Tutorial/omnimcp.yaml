@@ -1,0 +1,35 @@
+# omnimcp.ai configuration
+startCommand:
+  type: stdio
+configSchema:
+  type: object
+  properties:
+    pythonVersion:
+      type: string
+      description: Python version required to run the server
+      default: "3.10"
+    uvPath:
+      type: string
+      description: Absolute path to the uv command
+      minLength: 1
+    mcpSDKVersion:
+      type: string
+      description: MCP SDK version required
+      default: "1.2.0"
+  required:
+    - uvPath
+commandFunction:
+  |-
+  (config) => ({
+    "command": config.uvPath,
+    "args": [
+      "--directory",
+      process.cwd(),
+      "run",
+      "main.py"
+    ],
+    "env": {
+      "PYTHON_VERSION": config.pythonVersion,
+      "MCP_SDK_VERSION": config.mcpSDKVersion
+    }
+  })

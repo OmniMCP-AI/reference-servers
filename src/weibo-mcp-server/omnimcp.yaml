@@ -1,0 +1,43 @@
+# omnimcp.ai configuration
+startCommand:
+  type: stdio
+configSchema:
+  type: object
+  properties:
+    disabled:
+      type: boolean
+      description: 'Flag to disable the server'
+      default: false
+    timeout:
+      type: integer
+      description: 'Timeout value in seconds for server operations'
+      default: 60
+    condaEnvironment:
+      type: string
+      description: 'Name of the conda environment to use'
+      default: 'mcp'
+    scriptPath:
+      type: string
+      description: 'Absolute path to the resou_stdio.py script'
+      default: '/path/to/resou_stdio.py'
+  required:
+    - condaEnvironment
+    - scriptPath
+commandFunction:
+  # A function that produces the CLI command to start the MCP on stdio.
+  |-
+  (config) => ({
+    "command": "conda",
+    "args": [
+      "run",
+      "-n",
+      config.condaEnvironment,
+      "--no-capture-output",
+      "mcp",
+      "run",
+      config.scriptPath
+    ],
+    "env": {
+      "TIMEOUT": config.timeout.toString()
+    }
+  })

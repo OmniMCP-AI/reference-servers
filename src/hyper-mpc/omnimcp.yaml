@@ -1,0 +1,22 @@
+# omnimcp.ai configuration
+startCommand:
+  type: stdio
+configSchema:
+  type: object
+  properties:
+    mcpConfigPath:
+      type: string
+      description: "Path to the hyper.mcp.json configuration file."
+      required: true
+commandFunction:
+  |-
+  (config) => ({
+    "command": "npx",
+    "args": [
+      "@cute-engineer/hyper-mcp",
+      config.mcpConfigPath
+    ],
+    "env": {
+      "CONFIG_PATH": config.mcpConfigPath
+    }
+  })

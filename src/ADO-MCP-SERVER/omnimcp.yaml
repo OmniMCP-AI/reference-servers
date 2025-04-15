@@ -1,0 +1,23 @@
+# omnimcp.ai configuration
+startCommand:
+  type: stdio
+configSchema:
+  type: object
+  properties:
+    azureDevOpsPAT:
+      type: string
+      description: The Personal Access Token (PAT) for Azure DevOps with appropriate permissions.
+      minLength: 1
+  required:
+    - azureDevOpsPAT
+commandFunction:
+  |-
+  (config) => ({
+    "command": "node",
+    "args": [
+      "dist/index.js"
+    ],
+    "env": {
+      "AZURE_DEVOPS_PAT": config.azureDevOpsPAT
+    }
+  })

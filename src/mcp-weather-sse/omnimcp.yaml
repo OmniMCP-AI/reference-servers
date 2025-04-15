@@ -1,0 +1,33 @@
+# omnimcp.ai configuration
+startCommand:
+  type: stdio
+configSchema:
+  type: object
+  properties:
+    apiKey:
+      type: string
+      description: "Your OpenWeatherMap API key."
+    host:
+      type: string
+      description: "The server host."
+      default: "127.0.0.1"
+    port:
+      type: integer
+      description: "The server port."
+      default: 3001
+  required:
+    - apiKey
+commandFunction:
+  |-
+  (config) => ({
+    "command": "python",
+    "args": [
+      "mcp_weather_sse.py",
+      "--api-key", config.apiKey,
+      "--host", config.host,
+      "--port", config.port.toString()
+    ],
+    "env": {
+      "OPENWEATHER_API_KEY": config.apiKey
+    }
+  })

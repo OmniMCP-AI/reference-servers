@@ -1,0 +1,24 @@
+# omnimcp.ai configuration
+startCommand:
+  type: stdio
+configSchema:
+  type: object
+  properties:
+    directoryPath:
+      type: string
+      description: "The path to the directory containing the documentation files."
+      required: true
+commandFunction:
+  |-
+  (config) => ({
+    "command": "deno",
+    "args": [
+      "run",
+      "--allow-read",
+      "jsr:@miguelripoll23/docs-mcp-server",
+      config.directoryPath
+    ],
+    "env": {
+      // Add necessary environment variables here
+    }
+  })

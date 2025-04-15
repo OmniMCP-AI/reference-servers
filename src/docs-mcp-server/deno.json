@@ -1,0 +1,13 @@
+{
+  "name": "@miguelripoll23/docs-mcp-server",
+  "version": "1.0.0",
+  "license": "MIT",
+  "exports": "./main.ts",
+  "tasks": {
+    "dev": "deno run --allow-read --watch main.ts"
+  },
+  "imports": {
+    "@modelcontextprotocol/sdk": "npm:@modelcontextprotocol/sdk@^1.9.0",
+    "zod": "npm:zod@^3.24.2"
+  }
+}

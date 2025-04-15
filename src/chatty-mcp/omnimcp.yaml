@@ -1,0 +1,34 @@
+# omnimcp.ai configuration
+startCommand:
+  type: stdio
+configSchema:
+  type: object
+  properties:
+    apiKey:
+      type: string
+      description: "API key to authenticate requests."
+      required: true
+    language:
+      type: string
+      description: "Preferred language for the chat responses."
+      required: false
+      default: "en"
+    verbosity:
+      type: string
+      description: "Level of verbosity for Chatty's responses."
+      enum: ["low", "medium", "high"]
+      required: false
+      default: "medium"
+commandFunction:
+  |-
+  (config) => ({
+    "command": "node",
+    "args": [
+      "dist/index.js"
+    ],
+    "env": {
+      "API_KEY": config.apiKey,
+      "LANGUAGE": config.language || "en",
+      "VERBOSITY": config.verbosity || "medium"
+    }
+  })

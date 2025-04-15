@@ -1,0 +1,34 @@
+# omnimcp.ai configuration
+startCommand:
+  type: stdio
+configSchema:
+  type: object
+  properties:
+    gmailCredentialsPath:
+      type: string
+      description: "Path to the Gmail API credentials JSON file."
+      default: "credentials.json"
+    notesFilePath:
+      type: string
+      description: "Path to the file where notes will be stored."
+      default: "notes.txt"
+    tokenPath:
+      type: string
+      description: "Path to the authentication token for Gmail API."
+      default: "token.pickle"
+  required:
+    - gmailCredentialsPath
+    - notesFilePath
+    - tokenPath
+commandFunction: |-
+  (config) => ({
+    "command": "python",
+    "args": [
+      "main.py"
+    ],
+    "env": {
+      "GMAIL_CREDENTIALS_PATH": config.gmailCredentialsPath,
+      "NOTES_FILE_PATH": config.notesFilePath,
+      "TOKEN_PATH": config.tokenPath
+    }
+  })

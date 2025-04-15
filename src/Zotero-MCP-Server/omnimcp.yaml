@@ -1,0 +1,35 @@
+# omnimcp.ai configuration
+startCommand:
+  type: stdio
+configSchema:
+  type: object
+  properties:
+    libraryId:
+      type: string
+      description: "Zotero library ID, typically 8 digits"
+      minLength: 8
+      maxLength: 8
+      pattern: "^[0-9]{8}$"
+      required: true
+    libraryType:
+      type: string
+      enum: ["user"]
+      description: "Type of the Zotero library"
+      required: true
+commandFunction:
+  # A function that produces the CLI command to start the MCP on stdio.
+  |-
+  (config) => ({
+    "command": "uv",
+    "args": [
+      "run",
+      "--directory",
+      "/path/to/your/Zotero-MCP-Server",
+      "-m",
+      "src.zotero_mcp_server.zotero_mcp_server"
+    ],
+    "env": {
+      "LIBRARY_ID": config.libraryId,
+      "LIBRARY_TYPE": config.libraryType
+    }
+  })

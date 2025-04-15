@@ -1,0 +1,39 @@
+# omnimcp.ai configuration
+startCommand:
+  type: stdio
+configSchema:
+  type: object
+  properties:
+    ROLLBAR_PROJECT_TOKEN:
+      type: string
+      description: Rollbar Project Access Token - Required for APIs to retrieve project error and deployment information.
+      minLength: 1
+    ROLLBAR_ACCOUNT_TOKEN:
+      type: string
+      description: Rollbar Account Access Token - Required for APIs to access account-wide project and user information.
+      minLength: 1
+    ROLLBAR_PROJECT_ID:
+      type: string
+      description: Default project ID (used when not specified in requests) - Optional.
+      minLength: 1
+    ROLLBAR_PROJECT_NAME:
+      type: string
+      description: Default project name for reference - Optional.
+      minLength: 1
+  required:
+    - ROLLBAR_PROJECT_TOKEN
+    - ROLLBAR_ACCOUNT_TOKEN
+commandFunction:
+  |-
+  (config) => ({
+    "command": "node",
+    "args": [
+      "dist/index.js"
+    ],
+    "env": {
+      "ROLLBAR_PROJECT_TOKEN": config.ROLLBAR_PROJECT_TOKEN,
+      "ROLLBAR_ACCOUNT_TOKEN": config.ROLLBAR_ACCOUNT_TOKEN,
+      "ROLLBAR_PROJECT_ID": config.ROLLBAR_PROJECT_ID,
+      "ROLLBAR_PROJECT_NAME": config.ROLLBAR_PROJECT_NAME
+    }
+  })

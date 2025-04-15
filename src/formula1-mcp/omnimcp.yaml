@@ -1,0 +1,65 @@
+# omnimcp.ai configuration
+startCommand:
+  type: stdio
+configSchema:
+  type: object
+  properties:
+    year:
+      type: number
+      description: Season year (e.g., 2023)
+      required: false
+    circuit_short_name:
+      type: string
+      description: Short name of the circuit (e.g., "monza", "spa")
+      required: false
+    country_name:
+      type: string
+      description: Name of the country where the race is held (e.g., "Italy", "Belgium")
+      required: false
+    session_name:
+      type: string
+      description: Type of session (e.g., "Race", "Qualifying")
+      required: false
+    round:
+      type: number
+      description: Race number within a season (e.g., 1, 2, 3)
+      required: false
+    driverId:
+      type: string
+      description: Identifier for a specific driver (e.g., "max_verstappen", "lewis_hamilton")
+      required: false
+    constructorId:
+      type: string
+      description: Identifier for a constructor (e.g., "red_bull", "mercedes")
+      required: false
+    driverNumber:
+      type: string
+      description: Driver's car number (e.g., "44", "33")
+      required: false
+    sessionKey:
+      type: string
+      description: Identifier for a session
+      required: false
+    filters:
+      type: string
+      description: Data filters for fetching specific telemetry data
+      required: false
+    limit:
+      type: number
+      description: Number of seasons to return when listing available seasons
+      required: false
+    circuitId:
+      type: string
+      description: Identifier for the circuit (e.g., "monza", "spa")
+      required: false
+commandFunction:
+  |-
+  (config) => ({
+    "command": "node",
+    "args": [
+      "dist/index.js"
+    ],
+    "env": {
+      "NODE_ENV": "production"
+    }
+  })

@@ -1,0 +1,22 @@
+# omnimcp.ai configuration
+startCommand:
+  type: stdio
+configSchema:
+  type: object
+  properties:
+    rapidApiKey:
+      type: string
+      description: "Your API key for accessing the RapidAPI Fresh LinkedIn Profile Data API."
+      required: true
+commandFunction:
+  |-
+  (config) => ({
+    "command": "uv",
+    "args": [
+      "run",
+      "linkedin.py"
+    ],
+    "env": {
+      "RAPIDAPI_KEY": config.rapidApiKey
+    }
+  })

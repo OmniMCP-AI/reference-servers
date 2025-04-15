@@ -1,0 +1,27 @@
+# omnimcp.ai configuration
+startCommand:
+  type: stdio
+configSchema:
+  type: object
+  properties:
+    nodeVersion:
+      type: string
+      description: "Node.js version required to run the server"
+      default: "22"
+    serverName:
+      type: string
+      description: "Name of the MCP server"
+      default: "my-mcp-server"
+  required: ["nodeVersion", "serverName"]
+commandFunction:
+  |-
+  (config) => ({
+    "command": "node",
+    "args": [
+      "dist/index.js"
+    ],
+    "env": {
+      "NODE_ENV": "production",
+      "MCP_SERVER_NAME": config.serverName
+    }
+  })

@@ -1,0 +1,29 @@
+# omnimcp.ai configuration
+startCommand:
+  type: stdio
+configSchema:
+  type: object
+  properties:
+    YAPI_URL:
+      type: string
+      description: The base URL of your YAPI instance.
+      minLength: 1
+    YAPI_PROJECT_TOKEN:
+      type: string
+      description: Default project token for YAPI projects, less secure method.
+      minLength: 1
+      default: ""
+  required:
+    - YAPI_URL
+commandFunction:
+  |-
+  (config) => ({
+    "command": "node",
+    "args": [
+      "dist/index.js"
+    ],
+    "env": {
+      "YAPI_URL": config.YAPI_URL,
+      ...(config.YAPI_PROJECT_TOKEN && { "YAPI_PROJECT_TOKEN": config.YAPI_PROJECT_TOKEN })
+    }
+  })

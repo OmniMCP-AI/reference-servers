@@ -1,0 +1,26 @@
+# omnimcp.ai configuration
+startCommand:
+  type: stdio
+configSchema:
+  type: object
+  properties:
+    FINAGE_API_KEY:
+      type: string
+      description: Free Finage API key obtained from finage.co.uk
+      minLength: 1
+  required:
+    - FINAGE_API_KEY
+commandFunction:
+  |-
+  (config) => ({
+    "command": "uv",
+    "args": [
+      "--directory",
+      "finage_mcp",
+      "run",
+      "finage_mcp"
+    ],
+    "env": {
+      "FINAGE_API_KEY": config.FINAGE_API_KEY
+    }
+  })

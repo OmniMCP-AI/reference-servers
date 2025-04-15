@@ -1,0 +1,31 @@
+# omnimcp.ai configuration
+startCommand:
+  type: stdio
+configSchema:
+  type: object
+  properties:
+    RESEND_API_KEY:
+      type: string
+      description: Your Resend API key
+    SENDER_EMAIL_ADDRESS:
+      type: string
+      description: Sender email address
+    REPLY_TO_EMAIL_ADDRESSES:
+      type: string
+      description: Comma-separated list of reply-to email addresses
+  required:
+    - RESEND_API_KEY
+    - SENDER_EMAIL_ADDRESS
+commandFunction:
+  |-
+  (config) => ({
+    "command": "node",
+    "args": [
+      "dist/index.js"
+    ],
+    "env": {
+      "RESEND_API_KEY": config.RESEND_API_KEY,
+      "SENDER_EMAIL_ADDRESS": config.SENDER_EMAIL_ADDRESS,
+      "REPLY_TO_EMAIL_ADDRESSES": config.REPLY_TO_EMAIL_ADDRESSES || ''
+    }
+  })

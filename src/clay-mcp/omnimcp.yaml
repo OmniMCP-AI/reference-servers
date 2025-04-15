@@ -1,0 +1,27 @@
+# omnimcp.ai configuration
+
+startCommand:
+  type: stdio
+
+configSchema:
+  type: object
+  properties:
+    CLAY_API_KEY:
+      type: string
+      description: Clay API key for authentication
+      minLength: 1
+      required: true
+  required:
+    - CLAY_API_KEY
+
+commandFunction:
+  |-
+  (config) => ({
+    "command": "npx",
+    "args": [
+      "@clayhq/clay-mcp@latest"
+    ],
+    "env": {
+      "CLAY_API_KEY": config.CLAY_API_KEY
+    }
+  })

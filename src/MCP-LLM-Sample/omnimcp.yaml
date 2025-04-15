@@ -1,0 +1,24 @@
+# omnimcp.ai configuration
+startCommand:
+  type: stdio
+configSchema:
+  type: object
+  properties:
+    OPENAI_API_KEY:
+      type: string
+      description: Your OpenAI API key
+      minLength: 30
+  required:
+    - OPENAI_API_KEY
+commandFunction:
+  |-
+  (config) => ({
+    "command": "streamlit",
+    "args": [
+      "run",
+      "my_chat_bot_app.py"
+    ],
+    "env": {
+      "OPENAI_API_KEY": config.OPENAI_API_KEY
+    }
+  })

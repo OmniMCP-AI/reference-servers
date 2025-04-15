@@ -1,0 +1,32 @@
+# omnimcp.ai configuration
+startCommand:
+  type: stdio
+configSchema:
+  type: object
+  properties:
+    ATLASSIAN_API_TOKEN:
+      type: string
+      description: 'Your Atlassian API token.'
+    CONFLUENCE_URL:
+      type: string
+      description: 'The base URL for your Confluence instance, e.g., https://<YOUR_DOMAIN>.atlassian.net/wiki/api/v2'
+    CONFLUENCE_EMAIL:
+      type: string
+      description: 'Your email address used for Confluence.'
+  required:
+    - ATLASSIAN_API_TOKEN
+    - CONFLUENCE_URL
+    - CONFLUENCE_EMAIL
+commandFunction:
+  |- 
+  (config) => ({
+    "command": "node",
+    "args": [
+      "dist/index.js"
+    ],
+    "env": {
+      "ATLASSIAN_API_TOKEN": config.ATLASSIAN_API_TOKEN,
+      "CONFLUENCE_URL": config.CONFLUENCE_URL,
+      "CONFLUENCE_EMAIL": config.CONFLUENCE_EMAIL
+    }
+  })

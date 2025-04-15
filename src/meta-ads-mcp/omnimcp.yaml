@@ -1,0 +1,29 @@
+# omnimcp.ai configuration
+startCommand:
+  type: stdio
+configSchema:
+  type: object
+  properties:
+    appId:
+      type: string
+      description: "Your Meta App ID (Client ID)"
+      required: true
+    accessToken:
+      type: string
+      description: "Meta API access token (optional, will use cached token if not provided)"
+      required: false
+  required:
+    - appId
+commandFunction:
+  |-
+    (config) => ({
+      "command": "uvx",
+      "args": [
+        "meta-ads-mcp",
+        "--app-id", config.appId
+      ],
+      "env": {
+        "META_APP_ID": config.appId,
+        "ACCESS_TOKEN": config.accessToken || ""
+      }
+    })

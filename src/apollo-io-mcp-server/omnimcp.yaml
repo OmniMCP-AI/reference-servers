@@ -1,0 +1,24 @@
+# omnimcp.ai configuration
+startCommand:
+  type: stdio
+configSchema:
+  type: object
+  properties:
+    apiKey:
+      type: string
+      description: "Apollo.io API key for accessing the API services. Required for authentication."
+      minLength: 1
+  required:
+    - apiKey
+commandFunction: |-
+  (config) => ({
+    "command": "node",
+    "args": [
+      "dist/index.js",
+      "--api-key=" + config.apiKey
+    ],
+    "env": {
+      "APOLLO_IO_API_KEY": config.apiKey,
+      "AUTH_SERVER_URL": process.env.AUTH_SERVER_URL || "https://your-auth-server.com/verify"
+    }
+  })

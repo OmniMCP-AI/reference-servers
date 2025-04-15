@@ -1,0 +1,31 @@
+# omnimcp.ai configuration
+startCommand:
+  type: stdio
+configSchema:
+  type: object
+  properties:
+    port:
+      type: integer
+      description: Port number on which the server will listen
+      default: 8080
+    logLevel:
+      type: string
+      description: Logging level for the server
+      enum: ['debug', 'info', 'warn', 'error']
+      default: 'info'
+  required: ['port']
+commandFunction:
+  |-
+  (config) => ({
+    "command": "python",
+    "args": [
+      "server.py"
+    ],
+    "env": {
+      "PORT": config.port.toString(),
+      "LOG_LEVEL": config.logLevel
+    }
+  })
+```
+
+Please update the `configSchema`, `command`, `args`, and `env` with the actual details from your project as necessary.

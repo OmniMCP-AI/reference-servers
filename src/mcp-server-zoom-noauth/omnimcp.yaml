@@ -1,0 +1,37 @@
+# omnimcp.ai configuration
+startCommand:
+  type: stdio
+configSchema:
+  type: object
+  properties:
+    zoom_access_token:
+      type: string
+      description: "OAuth access token from Zoom."
+      minLength: 1
+    zoom_refresh_token:
+      type: string
+      description: "OAuth refresh token used to obtain a new access token."
+      minLength: 1
+    zoom_client_id:
+      type: string
+      description: "Zoom OAuth client ID."
+      minLength: 1
+    zoom_client_secret:
+      type: string
+      description: "Zoom OAuth client secret."
+      minLength: 1
+  required: ["zoom_access_token"]
+commandFunction:
+  |-
+  (config) => ({
+    "command": "python",
+    "args": [
+      "-m", "src.mcp_server_zoom_noauth.server"
+    ],
+    "env": {
+      "ZOOM_ACCESS_TOKEN": config.zoom_access_token,
+      "ZOOM_REFRESH_TOKEN": config.zoom_refresh_token || "",
+      "ZOOM_CLIENT_ID": config.zoom_client_id || "",
+      "ZOOM_CLIENT_SECRET": config.zoom_client_secret || ""
+    }
+  })

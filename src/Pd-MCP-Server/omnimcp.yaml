@@ -1,0 +1,44 @@
+# omnimcp.ai configuration
+startCommand:
+  type: stdio
+configSchema:
+  type: object
+  properties:
+    command:
+      type: string
+      description: "Command to run the Pure Data MCP Server, typically 'uv'."
+      default: "uv"
+    directory:
+      type: string
+      description: "The directory where the Pure Data MCP Server is located."
+      required: true
+    PD_OSC_HOST:
+      type: string
+      description: "The host IP for Pure Data OSC communication."
+      default: "127.0.0.1"
+    PD_OSC_PORT:
+      type: integer
+      description: "The port for sending OSC messages to Pure Data."
+      default: 5000
+    PD_FEEDBACK_PORT:
+      type: integer
+      description: "The port for receiving OSC feedback from Pure Data."
+      default: 5001
+  required:
+    - directory
+commandFunction:
+  |-
+  (config) => ({
+    "command": config.command,
+    "args": [
+      "--directory",
+      config.directory,
+      "run",
+      "main.py"
+    ],
+    "env": {
+      "PD_OSC_HOST": config.PD_OSC_HOST,
+      "PD_OSC_PORT": config.PD_OSC_PORT.toString(),
+      "PD_FEEDBACK_PORT": config.PD_FEEDBACK_PORT.toString()
+    }
+  })

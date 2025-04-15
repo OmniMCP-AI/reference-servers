@@ -1,0 +1,34 @@
+# omnimcp.ai configuration
+startCommand:
+  type: stdio
+configSchema:
+  type: object
+  properties:
+    databaseUrl:
+      type: string
+      description: "The connection URL for the PostgreSQL database."
+      required: true
+    redisUrl:
+      type: string
+      description: "The connection URL for the Redis service."
+      required: true
+    resendApiKey:
+      type: string
+      description: "The API key for Resend service used for email notifications."
+      required: false
+  required:
+    - databaseUrl
+    - redisUrl
+commandFunction:
+  |-
+  (config) => ({
+    command: "node",
+    args: [
+      "dist/index.js"
+    ],
+    env: {
+      DATABASE_URL: config.databaseUrl,
+      REDIS_URL: config.redisUrl,
+      RESEND_API_KEY: config.resendApiKey || ''
+    }
+  })

@@ -1,0 +1,27 @@
+# omnimcp.ai configuration
+startCommand:
+  type: stdio
+configSchema:
+  type: object
+  properties:
+    ENJIN_API_ENDPOINT:
+      type: string
+      description: "The endpoint for the Enjin Platform API."
+      default: "https://platform.canary.enjin.io/graphql"
+    ENJIN_API_KEY:
+      type: string
+      description: "Your Enjin Platform API key for authentication."
+      minLength: 1
+      required: true
+commandFunction:
+  |-
+  (config) => ({
+    "command": "node",
+    "args": [
+      "build/index.js"
+    ],
+    "env": {
+      "ENJIN_API_ENDPOINT": config.ENJIN_API_ENDPOINT,
+      "ENJIN_API_KEY": config.ENJIN_API_KEY
+    }
+  })

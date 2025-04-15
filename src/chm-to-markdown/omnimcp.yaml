@@ -1,0 +1,50 @@
+# omnimcp.ai configuration
+startCommand:
+  type: stdio
+configSchema:
+  type: object
+  properties:
+    input_folder:
+      type: string
+      description: Temporary folder for extracting CHM files
+      required: true
+    output_folder:
+      type: string
+      description: Directory where Markdown files will be saved
+      required: true
+    chm_file_path:
+      type: string
+      description: Path to the CHM file to be processed
+      required: true
+    max_workers:
+      type: integer
+      description: Number of worker threads for CPU-bound operations
+      default: 8
+      required: false
+    semaphore_limit:
+      type: integer
+      description: Maximum concurrent file I/O operations
+      default: 20
+      required: false
+    batch_size:
+      type: integer
+      description: Number of files to process in each batch
+      default: 50
+      required: false
+commandFunction:
+  |-
+  (config) => ({
+    "command": "python",
+    "args": [
+      "chm_to_markdown.py"
+    ],
+    "env": {
+      "INPUT_FOLDER": config.input_folder,
+      "OUTPUT_FOLDER": config.output_folder,
+      "CHM_FILE_PATH": config.chm_file_path,
+      "MAX_WORKERS": config.max_workers.toString(),
+      "SEMAPHORE_LIMIT": config.semaphore_limit.toString(),
+      "BATCH_SIZE": config.batch_size.toString(),
+      "PYTHONIOENCODING": "utf-8"
+    }
+  })

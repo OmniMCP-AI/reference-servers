@@ -1,0 +1,29 @@
+# omnimcp.ai configuration
+startCommand:
+  type: stdio
+configSchema:
+  type: object
+  properties:
+    nodePath:
+      type: string
+      description: "Path to the Node.js executable"
+      default: "node"
+    useNpx:
+      type: boolean
+      description: "Use npx to run the server"
+      default: true
+  required: ["nodePath"]
+commandFunction:
+  |-
+  (config) => {
+    const command = config.useNpx ? "npx" : config.nodePath;
+    return {
+      "command": command,
+      "args": [
+        "akhq-mcp-server"
+      ],
+      "env": {
+        // Add environment variables here if needed
+      }
+    };
+  }

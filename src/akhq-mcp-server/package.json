@@ -1,0 +1,47 @@
+{
+  "name": "akhq-mcp-server",
+  "version": "1.0.0",
+  "description": "Model Context Protocol (MCP) server implementation for AKHQ - GUI for Apache Kafka",
+  "main": "dist/main.js",
+  "type": "module",
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "build": "tsc && shx chmod +x dist/*.js",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "prepublishOnly": "npm run build"
+  },
+  "keywords": [
+    "kafka",
+    "akhq",
+    "mcp",
+    "model-context-protocol",
+    "kafka-gui"
+  ],
+  "author": {
+    "name": "William",
+    "url": "https://github.com/saarw"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/saarw/akhq-mcp-server.git"
+  },
+  "bugs": {
+    "url": "https://github.com/saarw/akhq-mcp-server/issues"
+  },
+  "homepage": "https://github.com/saarw/akhq-mcp-server#readme",
+  "license": "MIT",
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.9.0"
+  },
+  "engines": {
+    "node": ">=14.0.0"
+  },
+  "devDependencies": {
+    "shx": "^0.4.0",
+    "typescript": "^5.8.3"
+  }
+}

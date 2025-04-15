@@ -1,0 +1,24 @@
+# omnimcp.ai configuration
+startCommand:
+  type: stdio
+configSchema:
+  type: object
+  properties:
+    COINSTATS_API_KEY:
+      type: string
+      description: "Your CoinStats API key. Obtain it from the CoinStats API Documentation."
+      minLength: 1
+  required:
+    - COINSTATS_API_KEY
+commandFunction:
+  |-
+  (config) => ({
+    "command": "npx",
+    "args": [
+      "-y",
+      "@coinstats/coinstats-mcp"
+    ],
+    "env": {
+      "COINSTATS_API_KEY": config.COINSTATS_API_KEY
+    }
+  })

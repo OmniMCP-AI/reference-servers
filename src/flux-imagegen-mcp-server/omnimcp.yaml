@@ -1,0 +1,49 @@
+# omnimcp.ai configuration
+startCommand:
+  type: stdio
+configSchema:
+  type: object
+  properties:
+    prompt:
+      type: string
+      description: "The textual prompt for image generation."
+      required: true
+    model:
+      type: string
+      description: "The model to be used for image generation."
+      default: "flux"
+    width:
+      type: integer
+      description: "The width of the generated image."
+      default: 1024
+    height:
+      type: integer
+      description: "The height of the generated image."
+      default: 1024
+    enhance:
+      type: boolean
+      description: "Flag to enhance the image quality."
+      default: false
+    safe:
+      type: boolean
+      description: "Flag for safe mode to avoid generating explicit content."
+      default: true
+    outputPath:
+      type: string
+      description: "The path where the generated image will be saved."
+    fileName:
+      type: string
+      description: "The file name for the generated image."
+  required:
+    - prompt
+commandFunction:
+  |-
+  (config) => ({
+    "command": "node",
+    "args": [
+      "server.js"
+    ],
+    "env": {
+      "NODE_ENV": "production"
+    }
+  })

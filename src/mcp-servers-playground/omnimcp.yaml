@@ -1,0 +1,36 @@
+# omnimcp.ai configuration
+startCommand:
+  type: stdio
+configSchema:
+  type: object
+  properties:
+    serverType:
+      type: string
+      enum: ["jsonplaceholder", "calculator"]
+      description: "Type of server to run: 'jsonplaceholder' or 'calculator'."
+      default: "jsonplaceholder"
+env:
+  type: object
+  properties:
+    NODE_ENV:
+      type: string
+      description: "Node environment setting"
+      default: "production"
+      enum: ["development", "production"]
+required: ["serverType"]
+commandFunction:
+  |-
+  (config) => {
+    const isCalculator = config.serverType === 'calculator';
+    const pathToServer = isCalculator ? 'dist/servers/calculator.js' : 'dist/servers/jsonplaceholder.js';
+  
+    return {
+      "command": "node",
+      "args": [
+        pathToServer
+      ],
+      "env": {
+        "NODE_ENV": config.NODE_ENV || 'production'
+      }
+    };
+  }

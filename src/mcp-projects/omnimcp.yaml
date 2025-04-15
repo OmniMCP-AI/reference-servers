@@ -1,0 +1,35 @@
+# omnimcp.ai configuration
+startCommand:
+  type: stdio
+configSchema:
+  type: object
+  properties:
+    API_KEY:
+      type: string
+      description: "IBM Cloud API Key"
+      minLength: 1
+    PROJECT_ID:
+      type: string
+      description: "Watsonx Project ID"
+      minLength: 1
+    IBM_CLOUD_URL:
+      type: string
+      description: "IBM Cloud URL"
+      minLength: 1
+  required:
+    - API_KEY
+    - PROJECT_ID
+    - IBM_CLOUD_URL
+commandFunction:
+  |-
+  (config) => ({
+    "command": "node",
+    "args": [
+      "dist/index.js"
+    ],
+    "env": {
+      "API_KEY": config.API_KEY,
+      "PROJECT_ID": config.PROJECT_ID,
+      "IBM_CLOUD_URL": config.IBM_CLOUD_URL
+    }
+  })

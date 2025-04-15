@@ -1,0 +1,23 @@
+# omnimcp.ai configuration
+startCommand:
+  type: stdio
+configSchema:
+  type: object
+  properties:
+    FLOMO_API_URL:
+      type: string
+      description: "The API URL for accessing Flomo services."
+      minLength: 1
+  required: ["FLOMO_API_URL"]
+
+commandFunction:
+  |- 
+  (config) => ({
+    "command": "node",
+    "args": [
+      "dist/index.js"
+    ],
+    "env": {
+      "FLOMO_API_URL": config.FLOMO_API_URL
+    }
+  })

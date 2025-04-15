@@ -1,0 +1,30 @@
+# omnimcp.ai configuration
+startCommand:
+  type: stdio
+configSchema:
+  type: object
+  properties:
+    apiEndpoint:
+      type: string
+      description: "The endpoint of the Knesset ODATA API"
+      default: "http://knesset.gov.il/Odata/ParliamentInfo.svc"
+    port:
+      type: integer
+      description: "The port number the server will run on"
+      minimum: 1024
+      maximum: 65535
+      default: 3000
+  required:
+    - apiEndpoint
+commandFunction:
+  |-
+  (config) => ({
+    "command": "node",
+    "args": [
+      "build/knesset-mcp-server.js"
+    ],
+    "env": {
+      "API_ENDPOINT": config.apiEndpoint,
+      "PORT": config.port.toString()
+    }
+  })

@@ -1,0 +1,40 @@
+# omnimcp.ai configuration
+startCommand:
+  type: stdio
+configSchema:
+  type: object
+  properties:
+    mcpServers:
+      type: object
+      properties:
+        magicui-mcp:
+          type: object
+          properties:
+            command:
+              type: string
+              description: Command to execute the MCP server.
+              default: "npx"
+            args:
+              type: array
+              items:
+                type: string
+              description: Arguments for the MCP server command.
+              default:
+                - "-y"
+                - "@magicuidesign/mcp"
+          required:
+            - command
+            - args
+      required:
+        - magicui-mcp
+commandFunction: |-
+  (config) => ({
+    "command": "npx",
+    "args": [
+      "-y",
+      "@magicuidesign/mcp"
+    ],
+    "env": {
+      ...process.env
+    }
+  })

@@ -1,0 +1,33 @@
+# omnimcp.ai configuration
+startCommand:
+  type: stdio
+configSchema:
+  type: object
+  properties:
+    pythonPath:
+      type: string
+      description: Path to the Python executable in the virtual environment.
+      minLength: 1
+      required: true
+    scriptPath:
+      type: string
+      description: Path to the main.py script in the project directory.
+      minLength: 1
+      required: true
+    obsidianVaultPath:
+      type: string
+      description: Path to your Obsidian vault.
+      minLength: 1
+      required: true
+commandFunction:
+  # A function that produces the CLI command to start the MCP on stdio.
+  |-
+  (config) => ({
+    command: config.pythonPath,
+    args: [
+      config.scriptPath
+    ],
+    env: {
+      "OBSIDIAN_VAULT_PATH": config.obsidianVaultPath
+    }
+  })

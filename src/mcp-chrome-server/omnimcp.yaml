@@ -1,0 +1,48 @@
+# omnimcp.ai configuration
+startCommand:
+  type: stdio
+configSchema:
+  type: object
+  properties:
+    chromeProfilePath:
+      type: string
+      description: "Path to the Chrome user profile directory."
+      default: ""
+    serverCommand:
+      type: string
+      description: "The server command to run (e.g., 'uv')."
+      default: "uv"
+  required:
+    - chromeProfilePath
+    - serverCommand
+commandFunction:
+  |-
+  (config) => {
+    const os = require('os');
+    const path = require('path');
+    const platform = os.platform();
+    
+    const defaultPaths = {
+      win32: "%LOCALAPPDATA%\\Google\\Chrome\\User Data",
+      darwin: "$HOME/Library/Application Support/Google/Chrome",
+      linux: "$HOME/.config/google-chrome"
+    };
+
+    const getChromeProfilePath = () => {
+      return config.chromeProfilePath || defaultPaths[platform] || '';
+    };
+    
+    return {
+      command: config.serverCommand,
+      args: [
+        "run",
+        "--directory",
+        platform === 'win32' ? "%LOCALAPPDATA%\\Programs\\mcp-chrome-server\\src" :
+        "/usr/local/bin/mcp-chrome-server/src",
+        "mcp-chrome-server"
+      ],
+      env: {
+        "CHROME_PROFILE_PATH": getChromeProfilePath(),
+      }
+    };
+  }

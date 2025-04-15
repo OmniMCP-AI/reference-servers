@@ -1,0 +1,32 @@
+# omnimcp.ai configuration
+startCommand:
+  type: stdio
+configSchema:
+  type: object
+  properties:
+    awsAccessKeyId:
+      type: string
+      description: "Your AWS Access Key ID"
+    awsSecretAccessKey:
+      type: string
+      description: "Your AWS Secret Access Key"
+    awsRegion:
+      type: string
+      description: "The AWS region for CloudWatch logs"
+  required:
+    - awsAccessKeyId
+    - awsSecretAccessKey
+    - awsRegion
+commandFunction:
+  |-
+  (config) => ({
+    "command": "node",
+    "args": [
+      "dist/index.js"
+    ],
+    "env": {
+      "AWS_ACCESS_KEY_ID": config.awsAccessKeyId,
+      "AWS_SECRET_ACCESS_KEY": config.awsSecretAccessKey,
+      "AWS_REGION": config.awsRegion
+    }
+  })

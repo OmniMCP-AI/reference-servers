@@ -1,0 +1,48 @@
+# omnimcp.ai configuration
+startCommand:
+  type: stdio
+configSchema:
+  type: object
+  properties:
+    directory:
+      type: string
+      description: "Path to the Iceberg MCP Server directory"
+      required: true
+    IMPALA_HOST:
+      type: string
+      description: "The host address of the Impala coordinator"
+      required: true
+    IMPALA_PORT:
+      type: string
+      description: "The port number for Impala connection"
+      required: true
+    IMPALA_USER:
+      type: string
+      description: "Username for Impala authentication"
+      required: true
+    IMPALA_PASSWORD:
+      type: string
+      description: "Password for Impala authentication"
+      required: true
+    IMPALA_DATABASE:
+      type: string
+      description: "Default database name to connect to in Impala"
+      required: true
+commandFunction:
+  |-
+  (config) => ({
+    "command": "uv",
+    "args": [
+      "--directory",
+      config.directory,
+      "run",
+      "server.py"
+    ],
+    "env": {
+      "IMPALA_HOST": config.IMPALA_HOST,
+      "IMPALA_PORT": config.IMPALA_PORT,
+      "IMPALA_USER": config.IMPALA_USER,
+      "IMPALA_PASSWORD": config.IMPALA_PASSWORD,
+      "IMPALA_DATABASE": config.IMPALA_DATABASE
+    }
+  })

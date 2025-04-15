@@ -1,0 +1,32 @@
+# omnimcp.ai configuration
+startCommand:
+  type: stdio
+configSchema:
+  type: object
+  properties:
+    javaVersion:
+      type: string
+      description: "The Java version required to run the MCP Mediator."
+      default: "17"
+    mavenVersion:
+      type: string
+      description: "The Maven version required to build the MCP Mediator."
+      default: "3.6"
+    springBootVersion:
+      type: string
+      description: "The Spring Boot version required for integration."
+      default: "3.2.2"
+  required: ["javaVersion", "mavenVersion"]
+commandFunction:
+  |-
+  (config) => ({
+    "command": "java",
+    "args": [
+      "-jar",
+      "target/mcp-mediator.jar"
+    ],
+    "env": {
+      "JAVA_HOME": `/path/to/java-${config.javaVersion}`,
+      "MAVEN_HOME": `/path/to/maven-${config.mavenVersion}`
+    }
+  })

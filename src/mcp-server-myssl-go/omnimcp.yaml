@@ -1,0 +1,28 @@
+# omnimcp.ai configuration
+startCommand:
+  type: stdio
+configSchema:
+  type: object
+  properties:
+    AccessKey:
+      type: string
+      description: "The access key for MySSL API."
+      minLength: 1
+    SecretKey:
+      type: string
+      description: "The secret key for MySSL API."
+      minLength: 1
+  required: ["AccessKey", "SecretKey"]
+commandFunction:
+  |-
+  (config) => ({
+    "command": "go",
+    "args": [
+      "run",
+      "dist/index.js"
+    ],
+    "env": {
+      "AccessKey": config.AccessKey,
+      "SecretKey": config.SecretKey
+    }
+  })

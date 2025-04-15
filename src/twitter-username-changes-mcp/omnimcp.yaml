@@ -1,0 +1,27 @@
+# omnimcp.ai configuration
+startCommand:
+  type: stdio
+configSchema:
+  type: object
+  properties:
+    pythonPath:
+      type: string
+      description: "Path to the Python executable to be used."
+      default: "python"
+    scriptPath:
+      type: string
+      description: "Path to the main.py script."
+      default: "main.py"
+  required: ["pythonPath", "scriptPath"]
+commandFunction:
+  # A function that produces the CLI command to start the MCP on stdio.
+  |-
+  (config) => ({
+    "command": config.pythonPath,
+    "args": [
+      config.scriptPath
+    ],
+    "env": {
+      "PYTHONIOENCODING": "utf-8"
+    }
+  })

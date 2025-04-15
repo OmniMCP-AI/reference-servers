@@ -1,0 +1,37 @@
+# omnimcp.ai configuration
+startCommand:
+  type: stdio
+configSchema:
+  type: object
+  properties:
+    feishuWebhookUrl:
+      type: string
+      description: "The webhook URL for sending notifications to Feishu."
+      default: "https://www.feishu.cn/***"
+    webSocketServerUrl:
+      type: string
+      description: "The URL for the WebSocket server."
+      default: "ws://localhost:8765"
+    debug:
+      type: boolean
+      description: "Enable or disable debug mode."
+      default: false
+    logFile:
+      type: string
+      description: "Path to the local log file for notifications."
+  required: ["feishuWebhookUrl", "webSocketServerUrl"]
+commandFunction:
+  |-
+  (config) => ({
+    "command": "python",
+    "args": [
+      "-m",
+      "mcp_server_send_to_feishu",
+      ...(config.debug ? ["--debug"] : []),
+      ...(config.logFile ? ["--log-file", config.logFile] : [])
+    ],
+    "env": {
+      "FEISHU_WEBHOOK_URL": config.feishuWebhookUrl,
+      "WEBSOCKET_SERVER_URL": config.webSocketServerUrl
+    }
+  })

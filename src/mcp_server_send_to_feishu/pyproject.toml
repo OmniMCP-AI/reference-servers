@@ -1,0 +1,36 @@
+[project]
+name = "mcp-server-send-to-feishu"
+version = "0.1.0"
+description = "MCP Server for Feishu and WebSocket notifications"
+requires-python = ">=3.10"
+dependencies = [
+    "mcp[cli]>=1.0.0",
+    "pydantic>=2.0",
+    "requests>=2.25.1",
+    "websockets>=12.0",
+]
+
+[project.scripts]
+mcp-server-send-to-feishu = "mcp_server_send_to_feishu:main"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.uv]
+dev-dependencies = [
+    "pytest>=7.0",
+    "pytest-asyncio>=0.23",
+    "pytest-mock>=3.0",
+    "anyio>=4.0"  # 用于异步测试支持
+]
+
+[tool.pytest.ini_options]
+markers = [
+    "asyncio: mark test as async",
+    "parametrize: mark test with parameters",
+    "slow: mark test as slow"
+]
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/mcp_server_send_to_feishu"]

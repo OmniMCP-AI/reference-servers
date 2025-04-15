@@ -1,0 +1,7 @@
+POST http://localhost:3000/crawl
+Content-Type: application/json
+
+{
+  "url": "https://cap.cloud.sap/docs/cds/cql",
+  "limit": 10
+}

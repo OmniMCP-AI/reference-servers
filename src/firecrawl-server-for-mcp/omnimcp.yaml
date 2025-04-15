@@ -1,0 +1,28 @@
+# omnimcp.ai configuration
+startCommand:
+  type: stdio
+configSchema:
+  type: object
+  properties:
+    port:
+      type: integer
+      description: The port on which the server listens
+      default: 3000
+    environment:
+      type: string
+      description: The server environment setting (e.g., 'development', 'production')
+      default: 'development'
+  required:
+    - port
+commandFunction:
+  |- 
+  (config) => ({
+    "command": "node",
+    "args": [
+      "dist/index.js"
+    ],
+    "env": {
+      "PORT": config.port.toString(),
+      "NODE_ENV": config.environment
+    }
+  })

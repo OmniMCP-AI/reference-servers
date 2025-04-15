@@ -1,0 +1,9 @@
+POST http://localhost:3000/scrape-batch
+Content-Type: application/json
+
+{
+  "urls": [
+    "https://cap.cloud.sap/docs/cds/cdl",
+    "https://cap.cloud.sap/docs/cds/cql"
+  ]
+}

@@ -1,0 +1,32 @@
+# omnimcp.ai configuration
+startCommand:
+  type: stdio
+configSchema:
+  type: object
+  properties:
+    temperature:
+      type: number
+      description: "Temperature value to convert"
+    from_unit:
+      type: string
+      description: "Source temperature unit"
+      enum: ["celsius", "fahrenheit"]
+    to_unit:
+      type: string
+      description: "Target temperature unit"
+      enum: ["celsius", "fahrenheit"]
+  required: ["temperature", "from_unit", "to_unit"]
+commandFunction:
+  |-
+  (config) => ({
+    "command": "go",
+    "args": [
+      "run",
+      "./cmd/temperature"
+    ],
+    "env": {
+      "TEMPERATURE": config.temperature.toString(),
+      "FROM_UNIT": config.from_unit,
+      "TO_UNIT": config.to_unit
+    }
+  })

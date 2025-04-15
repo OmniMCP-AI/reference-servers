@@ -1,0 +1,47 @@
+# omnimcp.ai configuration
+startCommand:
+  type: stdio
+configSchema:
+  type: object
+  properties:
+    shenyu:
+      type: object
+      properties:
+        local:
+          type: object
+          properties:
+            enabled:
+              type: boolean
+              description: Enable local mode
+            sha512Key:
+              type: string
+              description: Custom local key for request headers
+        sync:
+          type: object
+          properties:
+            websocketUrls:
+              type: string
+              description: Websocket URL for admin sync
+  required: []
+commandFunction:
+  # A function that produces the CLI command to start the MCP on stdio.
+  |-
+  (config) => ({
+    "command": "docker",
+    "args": [
+      "run",
+      "-d",
+      "--name",
+      "shenyu-quickstart",
+      "-p",
+      "9195:9195",
+      "-e",
+      `shenyu.local.enabled=${config.shenyu.local.enabled}`,
+      `-e`,
+      `SHENYU_SYNC_WEBSOCKET_URLS=${config.shenyu.sync.websocketUrls}`,
+      "--net",
+      "shenyu",
+      "apache/shenyu-bootstrap"
+    ],
+    "env": {}
+  })

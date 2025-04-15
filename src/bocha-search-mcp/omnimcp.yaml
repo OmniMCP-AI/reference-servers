@@ -1,0 +1,40 @@
+# omnimcp.ai configuration
+startCommand:
+  type: stdio
+configSchema:
+  type: object
+  properties:
+    query:
+      type: string
+      description: 搜索词(必填)
+      minLength: 1
+    freshness:
+      type: string
+      description: 搜索指定时间范围内的网页
+      enum: ["YYYY-MM-DD", "YYYY-MM-DD..YYYY-MM-DD", "noLimit", "oneYear", "oneMonth", "oneWeek", "oneDay"]
+      default: "noLimit"
+    count:
+      type: integer
+      description: 返回结果的条数 (1-50)
+      minimum: 1
+      maximum: 50
+      default: 10
+    apiKey:
+      type: string
+      description: 博查AI API密钥
+      minLength: 1
+      required: true
+commandFunction:
+  |-
+  (config) => ({
+    "command": "uv",
+    "args": [
+      "--directory",
+      "/path/to/bocha-search-mcp",
+      "run",
+      "bocha-search-mcp"
+    ],
+    "env": {
+      "BOCHA_API_KEY": config.apiKey
+    }
+  })

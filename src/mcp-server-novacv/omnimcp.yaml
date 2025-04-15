@@ -1,0 +1,33 @@
+# omnimcp.ai configuration
+startCommand:
+  type: stdio
+configSchema:
+  type: object
+  properties:
+    api_key:
+      type: string
+      description: "NovaCV API 密钥"
+      required: true
+    api_base_url:
+      type: string
+      description: "API 基础 URL"
+      required: false
+    timeout:
+      type: integer
+      description: "API 超时时间 (毫秒)"
+      example: 5000
+      required: false
+commandFunction:
+  |-
+  (config) => ({
+    "command": "npx",
+    "args": [
+      "mcp-server-novacv",
+      "--api_key=" + config.api_key
+    ],
+    "env": {
+      "NOVACV_API_KEY": config.api_key,
+      ...(config.api_base_url && {"NOVACV_API_BASE_URL": config.api_base_url}),
+      ...(config.timeout && {"TIMEOUT": config.timeout.toString()})
+    }
+  })

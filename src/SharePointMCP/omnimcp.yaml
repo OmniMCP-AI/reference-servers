@@ -1,0 +1,37 @@
+# omnimcp.ai configuration
+startCommand:
+  type: stdio
+configSchema:
+  type: object
+  properties:
+    clientId:
+      type: string
+      description: The Client ID for Azure AD application.
+      required: true
+    clientSecret:
+      type: string
+      description: The Client Secret for Azure AD application.
+      required: true
+    tenantId:
+      type: string
+      description: The Tenant ID for Azure AD.
+      required: true
+    apiEndpoint:
+      type: string
+      description: The API endpoint for the MCP server.
+      required: true
+commandFunction: |-
+  (config) => ({
+    "command": "dotnet",
+    "args": [
+      "run",
+      "--project",
+      "src/McpServer"
+    ],
+    "env": {
+      "AZURE_AD_CLIENT_ID": config.clientId,
+      "AZURE_AD_CLIENT_SECRET": config.clientSecret,
+      "AZURE_AD_TENANT_ID": config.tenantId,
+      "API_ENDPOINT": config.apiEndpoint
+    }
+  })

@@ -1,0 +1,73 @@
+# omnimcp.ai configuration
+startCommand:
+  type: stdio
+configSchema:
+  type: object
+  properties:
+    sitePath:
+      type: string
+      description: "The absolute path to the Hugo site directory"
+      minLength: 1
+    port:
+      type: integer
+      description: "The port to use for the preview server"
+      default: 1313
+    bind:
+      type: string
+      description: "The address to bind the server to"
+      default: "127.0.0.1"
+    buildDrafts:
+      type: boolean
+      description: "Set to true to build draft content"
+      default: false
+    buildFuture:
+      type: boolean
+      description: "Set to true to build future content"
+      default: false
+    buildExpired:
+      type: boolean
+      description: "Set to true to build expired content"
+      default: false
+    platform:
+      type: string
+      description: "Deployment platform (github-pages, netlify, vercel, custom)"
+      enum: ["github-pages", "netlify", "vercel", "custom"]
+    branch:
+      type: string
+      description: "Branch to deploy to"
+      default: "main"
+    commitMessage:
+      type: string
+      description: "Commit message for the deployment"
+      default: "Update site"
+    remoteUrl:
+      type: string
+      description: "Remote URL for custom deployment"
+    apiKey:
+      type: string
+      description: "API key for the deployment platform"
+  required:
+    - sitePath
+commandFunction:
+  |-
+  (config) => ({
+    "command": "uv",
+    "args": [
+      "--directory",
+      config.sitePath,
+      "run",
+      "main.py"
+    ],
+    "env": {
+      "HUGO_PREVIEW_PORT": config.port,
+      "HUGO_BIND_ADDRESS": config.bind,
+      "HUGO_BUILD_DRAFTS": config.buildDrafts ? "true" : "false",
+      "HUGO_BUILD_FUTURE": config.buildFuture ? "true" : "false",
+      "HUGO_BUILD_EXPIRED": config.buildExpired ? "true" : "false",
+      "DEPLOYMENT_PLATFORM": config.platform,
+      "DEPLOY_BRANCH": config.branch,
+      "DEPLOY_COMMIT_MESSAGE": config.commitMessage,
+      "CUSTOM_REMOTE_URL": config.remoteUrl,
+      "DEPLOY_API_KEY": config.apiKey
+    }
+  })

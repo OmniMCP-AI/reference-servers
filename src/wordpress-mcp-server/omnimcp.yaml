@@ -1,0 +1,36 @@
+# omnimcp.ai configuration
+startCommand:
+  type: stdio
+configSchema:
+  type: object
+  properties:
+    wpSiteUrl:
+      type: string
+      description: Your WordPress site URL
+      minLength: 1
+    wpUsername:
+      type: string
+      description: Your WordPress username
+      minLength: 1
+    wpPassword:
+      type: string
+      description: Your WordPress application password
+      minLength: 1
+  required:
+    - wpSiteUrl
+    - wpUsername
+    - wpPassword
+commandFunction:
+  |- 
+    (config) => ({
+      "command": "python",
+      "args": [
+        "main.py",
+        "--mcp"
+      ],
+      "env": {
+        "WP_SITE_URL": config.wpSiteUrl,
+        "WP_USERNAME": config.wpUsername,
+        "WP_PASSWORD": config.wpPassword
+      }
+    })

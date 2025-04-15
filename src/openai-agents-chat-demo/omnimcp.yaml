@@ -1,0 +1,23 @@
+# omnimcp.ai configuration
+startCommand:
+  type: stdio
+configSchema:
+  type: object
+  properties:
+    openaiApiKey:
+      type: string
+      description: OpenAI API密钥
+      minLength: 1
+  required:
+    - openaiApiKey
+commandFunction:
+  |-
+  (config) => ({
+    "command": "python",
+    "args": [
+      "app.py"
+    ],
+    "env": {
+      "OPENAI_API_KEY": config.openaiApiKey
+    }
+  })

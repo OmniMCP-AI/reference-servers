@@ -1,0 +1,35 @@
+# omnimcp.ai configuration
+startCommand:
+  type: stdio
+configSchema:
+  type: object
+  properties:
+    rundeckCliPath:
+      type: string
+      description: "Path to the Rundeck CLI tool."
+      default: "/path/to/rundeck-cli/bin/rd"
+    rundeckBaseUrl:
+      type: string
+      description: "URL of the Rundeck server."
+      default: "http://your-rundeck-server:port/"
+    rundeckApiToken:
+      type: string
+      description: "API token for Rundeck authentication."
+      default: "your-api-token"
+  required:
+    - rundeckCliPath
+    - rundeckBaseUrl
+    - rundeckApiToken
+commandFunction:
+  |-
+  (config) => ({
+    "command": "node",
+    "args": [
+      "dist/index.js"
+    ],
+    "env": {
+      "RUNDECK_CLI_PATH": config.rundeckCliPath,
+      "RUNDECK_BASE_URL": config.rundeckBaseUrl,
+      "RUNDECK_API_TOKEN": config.rundeckApiToken
+    }
+  })

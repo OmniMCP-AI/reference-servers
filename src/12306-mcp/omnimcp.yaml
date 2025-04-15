@@ -1,0 +1,32 @@
+# omnimcp.ai configuration
+startCommand:
+  type: stdio
+configSchema:
+  type: object
+  properties:
+    mcpServers:
+      type: object
+      properties:
+        command:
+          type: string
+          description: The command to start the MCP server.
+          minLength: 1
+        args:
+          type: array
+          items:
+            type: string
+          description: Arguments for the MCP server command.
+      required:
+        - command
+        - args
+commandFunction:
+  |-
+  (config) => ({
+    "command": "node",
+    "args": [
+      "build/index.js"
+    ],
+    "env": {
+      ...process.env
+    }
+  })

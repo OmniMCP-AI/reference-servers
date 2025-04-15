@@ -1,0 +1,22 @@
+# omnimcp.ai configuration
+startCommand:
+  type: stdio
+configSchema:
+  type: object
+  properties:
+    OSC_ACCESS_TOKEN:
+      type: string
+      description: Personal Access Token for Eyevinn OSC
+      required: true
+commandFunction:
+  |-
+  (config) => ({
+    "command": "npx",
+    "args": [
+      "-y",
+      "@osaas/mcp-server"
+    ],
+    "env": {
+      "OSC_ACCESS_TOKEN": config.OSC_ACCESS_TOKEN
+    }
+  })

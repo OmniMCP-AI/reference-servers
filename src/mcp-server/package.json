@@ -1,0 +1,45 @@
+{
+  "name": "@osaas/mcp-server",
+  "version": "1.0.1",
+  "description": "MCP server for using the Eyevinn Open Source Cloud API",
+  "license": "MIT",
+  "author": "Eyevinn Technology AB (https://www.eyevinn.se)",
+  "homepage": "https://www.osaas.io",
+  "type": "module",
+  "bin": {
+    "mcp-eyevinn-osc": "dist/index.js"
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsc && shx chmod +x dist/*.js",
+    "watch": "tsc --watch",
+    "lint": "eslint .",
+    "pretty": "prettier --check --ignore-unknown .",
+    "typecheck": "tsc --noEmit -p tsconfig.json",
+    "postversion": "git push && git push --tags"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "0.6.0",
+    "@osaas/client-core": "^0.15.0",
+    "@osaas/client-services": "^0.2.4",
+    "@osaas/client-transcode": "^0.13.0",
+    "dotenv": "^16.4.5",
+    "mime-types": "^3.0.1",
+    "minio": "^8.0.2",
+    "zod-to-json-schema": "^3.23.5"
+  },
+  "devDependencies": {
+    "@types/mime-types": "^2.1.4",
+    "@types/node": "^22.10.0",
+    "@typescript-eslint/eslint-plugin": "^5.51.0",
+    "@typescript-eslint/parser": "^5.51.0",
+    "eslint": "^8.33.0",
+    "eslint-config-prettier": "^8.6.0",
+    "eslint-plugin-prettier": "^4.2.1",
+    "prettier": "^2.8.4",
+    "shx": "^0.3.4",
+    "typescript": "^5.6.2"
+  }
+}

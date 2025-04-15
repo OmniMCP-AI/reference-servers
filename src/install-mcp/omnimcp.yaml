@@ -1,0 +1,26 @@
+# omnimcp.ai configuration
+startCommand:
+  type: stdio
+configSchema:
+  type: object
+  properties:
+    client:
+      type: string
+      description: "The client to use for the MCP server"
+      enum: ["claude", "cline", "roo-cline", "windsurf", "witsy", "enconvo"]
+      required: true
+commandFunction:
+  # A function that produces the CLI command to start the MCP on stdio.
+  |-
+  (config) => ({
+    "command": "npx",
+    "args": [
+      "install-mcp",
+      "<command>", // Replace <command> with actual command
+      "--client",
+      config.client
+    ],
+    "env": {
+      ...
+    }
+  })

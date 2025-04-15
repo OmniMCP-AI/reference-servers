@@ -1,0 +1,48 @@
+# omnimcp.ai configuration
+startCommand:
+  type: stdio
+configSchema:
+  type: object
+  properties:
+    disabled:
+      type: boolean
+      description: Whether the server is disabled
+      default: false
+    timeout:
+      type: integer
+      description: Timeout for the command in seconds
+      default: 60
+    command:
+      type: string
+      description: Command to run the server
+      default: "conda"
+    args:
+      type: array
+      items:
+        type: string
+      description: Arguments for the command
+      default:
+        - "run"
+        - "-n"
+        - "mcp"
+        - "--no-capture-output"
+        - "mcp"
+        - "run"
+        - "文件的绝对路径/resou_stdio.py"
+    transportType:
+      type: string
+      description: Transport type for the MCP
+      default: "stdio"
+  required:
+    - command
+    - args
+    - transportType
+commandFunction:
+  |-
+  (config) => ({
+    "command": config.command,
+    "args": config.args,
+    "env": {
+      "CONDA_DEFAULT_ENV": "mcp",
+    }
+  })

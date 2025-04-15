@@ -1,0 +1,25 @@
+# omnimcp.ai configuration
+startCommand:
+  type: stdio
+configSchema:
+  type: object
+  properties:
+    geminiApiKey:
+      type: string
+      description: Gemini API key for document generation
+      required: false
+    location:
+      type: string
+      description: Absolute path where memory-bank folder will be created
+      required: false
+commandFunction:
+  |-
+  (config) => ({
+    "command": "node",
+    "args": [
+      "dist/index.js"
+    ],
+    "env": {
+      "GEMINI_API_KEY": config.geminiApiKey || process.env.GEMINI_API_KEY || ''
+    }
+  })

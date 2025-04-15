@@ -1,0 +1,26 @@
+# omnimcp.ai configuration
+startCommand:
+  type: stdio
+configSchema:
+  type: object
+  properties:
+    oauthKV:
+      type: string
+      description: "Cloudflare KV namespace ID for OAuth"
+      required: true
+    port:
+      type: integer
+      description: "Local server port"
+      required: true
+  required: ["oauthKV", "port"]
+commandFunction: |-
+  (config) => ({
+    "command": "node",
+    "args": [
+      "dist/index.js"
+    ],
+    "env": {
+      "OAUTH_KV_NAMESPACE_ID": config.oauthKV,
+      "PORT": config.port.toString()
+    }
+  })

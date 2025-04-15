@@ -1,0 +1,23 @@
+# omnimcp.ai configuration
+startCommand:
+  type: stdio
+configSchema:
+  type: object
+  properties:
+    VARIFLIGHT_API_KEY:
+      type: string
+      description: The API key for accessing Variflight services.
+      minLength: 1
+      required: true
+commandFunction:
+  |-
+  (config) => ({
+    "command": "npx",
+    "args": [
+      "-y",
+      "@variflight-ai/variflight-mcp"
+    ],
+    "env": {
+      "VARIFLIGHT_API_KEY": config.VARIFLIGHT_API_KEY
+    }
+  })

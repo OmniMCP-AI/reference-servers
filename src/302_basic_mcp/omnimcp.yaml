@@ -1,0 +1,23 @@
+# omnimcp.ai configuration
+startCommand:
+  type: stdio
+configSchema:
+  type: object
+  properties:
+    302AI_API_KEY:
+      type: string
+      description: "API Key for accessing 302AI services"
+      minLength: 1
+      required: true
+commandFunction:
+  |-
+  (config) => ({
+    "command": "npx",
+    "args": [
+      "-y",
+      "@302ai/basic-mcp"
+    ],
+    "env": {
+      "302AI_API_KEY": config["302AI_API_KEY"]
+    }
+  })

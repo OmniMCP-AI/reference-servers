@@ -1,0 +1,39 @@
+# omnimcp.ai configuration
+startCommand:
+  type: stdio
+configSchema:
+  # JSON Schema defining the configuration options for the MCP.
+  {
+    "type": "object",
+    "properties": {
+      "apiSpec": {
+        "type": "string",
+        "description": "The OpenAPI/Swagger specification file.",
+        "required": true
+      },
+      "port": {
+        "type": "integer",
+        "description": "The port on which the MCP server should run.",
+        "required": true
+      },
+      "host": {
+        "type": "string",
+        "description": "The host address for the MCP server."
+      }
+    },
+    "required": ["apiSpec", "port"]
+  }
+commandFunction:
+  # A function that produces the CLI command to start the MCP on stdio.
+  |-
+  (config) => ({
+    "command": "node",
+    "args": [
+      "dist/index.js"
+    ],
+    "env": {
+      "API_SPEC": config.apiSpec,
+      "PORT": config.port.toString(),
+      "HOST": config.host || 'localhost'
+    }
+  })

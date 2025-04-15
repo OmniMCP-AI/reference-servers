@@ -1,0 +1,43 @@
+# omnimcp.ai configuration
+startCommand:
+  type: stdio
+configSchema:
+  type: object
+  properties:
+    PORT:
+      type: integer
+      description: "Port the server will listen on."
+      default: 3000
+    NODE_ENV:
+      type: string
+      description: "Node environment mode."
+      enum: ["development", "production"]
+      default: "development"
+    FREELO_EMAIL:
+      type: string
+      description: "Email for Freelo API authentication."
+      minLength: 1
+    FREELO_API_KEY:
+      type: string
+      description: "API key for Freelo API authentication."
+      minLength: 1
+    FREELO_USER_AGENT:
+      type: string
+      description: "User-Agent header for Freelo API requests."
+      minLength: 1
+  required: ["FREELO_EMAIL", "FREELO_API_KEY", "FREELO_USER_AGENT"]
+commandFunction:
+  |-
+  (config) => ({
+    command: "node",
+    args: [
+      "bin/freelo-mcp.js"
+    ],
+    env: {
+      PORT: config.PORT || 3000,
+      NODE_ENV: config.NODE_ENV || "development",
+      FREELO_EMAIL: config.FREELO_EMAIL,
+      FREELO_API_KEY: config.FREELO_API_KEY,
+      FREELO_USER_AGENT: config.FREELO_USER_AGENT
+    }
+  })

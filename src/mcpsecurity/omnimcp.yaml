@@ -1,0 +1,35 @@
+# omnimcp.ai configuration
+startCommand:
+  type: stdio
+configSchema:
+  type: object
+  properties:
+    databasePath:
+      type: string
+      description: "Path to the SQLite database file"
+      default: "./database.sqlite"
+    ollamaModelPath:
+      type: string
+      description: "Path to the local Ollama LLM model"
+      default: "./ollama_model"
+    port:
+      type: integer
+      description: "Port for FastAPI server"
+      default: 8000
+  required:
+    - databasePath
+    - ollamaModelPath
+    - port
+commandFunction:
+  |-
+  (config) => ({
+    "command": "node",
+    "args": [
+      "dist/index.js"
+    ],
+    "env": {
+      "DATABASE_PATH": config.databasePath,
+      "OLLAMA_MODEL_PATH": config.ollamaModelPath,
+      "PORT": config.port.toString()
+    }
+  })

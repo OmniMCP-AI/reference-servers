@@ -1,0 +1,35 @@
+# omnimcp.ai configuration
+startCommand:
+  type: stdio
+configSchema:
+  type: object
+  properties:
+    IFLY_SPARK_AGENT_BASE_URL:
+      type: string
+      description: Base URL for the iFlytek SparkAgent
+    IFLY_SPARK_AGENT_APP_ID:
+      type: string
+      description: Application ID for the iFlytek SparkAgent
+      required: true
+    IFLY_SPARK_AGENT_APP_SECRET:
+      type: string
+      description: Application Secret for the iFlytek SparkAgent
+      required: true
+  required:
+    - IFLY_SPARK_AGENT_BASE_URL
+    - IFLY_SPARK_AGENT_APP_ID
+    - IFLY_SPARK_AGENT_APP_SECRET
+commandFunction:
+  |-
+  (config) => ({
+    "command": "uv",
+    "args": [
+      "run",
+      "ifly-spark-agent-mcp"
+    ],
+    "env": {
+      "IFLY_SPARK_AGENT_BASE_URL": config.IFLY_SPARK_AGENT_BASE_URL,
+      "IFLY_SPARK_AGENT_APP_ID": config.IFLY_SPARK_AGENT_APP_ID,
+      "IFLY_SPARK_AGENT_APP_SECRET": config.IFLY_SPARK_AGENT_APP_SECRET
+    }
+  })

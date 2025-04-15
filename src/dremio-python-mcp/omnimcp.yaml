@@ -1,0 +1,77 @@
+# omnimcp.ai configuration
+startCommand:
+  type: stdio
+configSchema:
+  type: object
+  properties:
+    dremio:
+      type: object
+      properties:
+        type:
+          type: string
+          description: Connection type ('software' or 'cloud') for Dremio
+          enum: ['software', 'cloud']
+        software:
+          type: object
+          properties:
+            hostname:
+              type: string
+              description: Hostname for Dremio Software connection
+              default: localhost
+            port:
+              type: integer
+              description: Port for Dremio Software connection
+              default: 32010
+            username:
+              type: string
+              description: Username for Dremio authentication
+            password:
+              type: string
+              description: Password for Dremio authentication
+            use_ssl:
+              type: boolean
+              description: Use SSL for Dremio connection
+              default: false
+        cloud:
+          type: object
+          properties:
+            endpoint:
+              type: string
+              description: Endpoint for Dremio Cloud connection
+            pat_token:
+              type: string
+              description: Personal Access Token for Dremio Cloud
+    query:
+      type: object
+      properties:
+        max_rows:
+          type: integer
+          description: Maximum number of rows to return in a query result
+          default: 10000
+        max_columns:
+          type: integer
+          description: Maximum number of columns to return in schema request
+          default: 1000
+        timeout:
+          type: integer
+          description: Timeout in seconds for query execution
+          default: 300
+  required: ['dremio']
+commandFunction:
+  |-
+  (config) => ({
+    "command": "python",
+    "args": [
+      "run_mcp_server.py"
+    ],
+    "env": {
+      "DREMIO_HOSTNAME": config.dremio.software.hostname || process.env.DREMIO_HOSTNAME || "localhost",
+      "DREMIO_PORT": config.dremio.software.port || process.env.DREMIO_PORT || "32010",
+      "DREMIO_USERNAME": config.dremio.software.username || process.env.DREMIO_USERNAME,
+      "DREMIO_PASSWORD": config.dremio.software.password || process.env.DREMIO_PASSWORD,
+      "DREMIO_USE_SSL": config.dremio.software.use_ssl ? "true" : "false",
+      "DREMIO_TYPE": config.dremio.type || process.env.DREMIO_TYPE,
+      "DREMIO_ENDPOINT": config.dremio.cloud.endpoint || process.env.DREMIO_ENDPOINT,
+      "DREMIO_PAT_TOKEN": config.dremio.cloud.pat_token || process.env.DREMIO_PAT_TOKEN
+    }
+  })

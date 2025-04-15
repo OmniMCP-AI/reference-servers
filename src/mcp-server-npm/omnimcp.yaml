@@ -1,0 +1,21 @@
+# omnimcp.ai configuration
+startCommand:
+  type: stdio
+configSchema:
+  type: object
+  properties:
+    packageName:
+      type: string
+      description: "The name of the npm package to look up"
+      required: true
+commandFunction:
+  |-
+  (config) => ({
+    "command": "npm",
+    "args": [
+      "start"
+    ],
+    "env": {
+      ...
+    }
+  })

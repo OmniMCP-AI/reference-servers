@@ -1,0 +1,23 @@
+# omnimcp.ai configuration
+startCommand:
+  type: stdio
+configSchema:
+  type: object
+  properties:
+    docsDirectory:
+      type: string
+      description: "Path to the directory containing Markdown files."
+      default: "./docs"
+  required: []
+commandFunction:
+  |-
+  (config) => ({
+    command: "node",
+    args: [
+      "dist/index.js",
+      config.docsDirectory
+    ],
+    env: {
+      // Define any necessary environment variables here
+    }
+  })

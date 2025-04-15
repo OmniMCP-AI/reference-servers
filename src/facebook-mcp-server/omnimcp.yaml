@@ -1,0 +1,29 @@
+# omnimcp.ai configuration
+startCommand:
+  type: stdio
+configSchema:
+  type: object
+  properties:
+    facebookPageAccessToken:
+      type: string
+      description: Facebook Page access token for authentication
+      minLength: 1
+    facebookPageId:
+      type: string
+      description: Facebook Page ID for targeting actions
+      minLength: 1
+  required:
+    - facebookPageAccessToken
+    - facebookPageId
+commandFunction:
+  |-
+  (config) => ({
+    "command": "node",
+    "args": [
+      "dist/index.js"
+    ],
+    "env": {
+      "FACEBOOK_PAGE_ACCESS_TOKEN": config.facebookPageAccessToken,
+      "FACEBOOK_PAGE_ID": config.facebookPageId
+    }
+  })

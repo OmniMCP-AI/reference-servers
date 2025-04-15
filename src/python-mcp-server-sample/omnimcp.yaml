@@ -1,0 +1,24 @@
+# omnimcp.ai configuration
+startCommand:
+  type: stdio
+configSchema:
+  type: object
+  properties:
+    directory:
+      type: string
+      description: The path to the MCP server directory
+      required: true
+commandFunction:
+  |- 
+  (config) => ({
+    "command": "uv",
+    "args": [
+      "--directory",
+      config.directory,
+      "run",
+      "server.py"
+    ],
+    "env": {
+      "DEBUG": "true"
+    }
+  })

@@ -1,0 +1,36 @@
+# omnimcp.ai configuration
+startCommand:
+  type: stdio
+configSchema:
+  type: object
+  properties:
+    apiType:
+      type: string
+      description: "The type of API integration, e.g., 'openai', 'anthropic'."
+      enum: ["openai", "anthropic"]
+    apiKey:
+      type: string
+      description: "The API key used for accessing the service."
+      minLength: 1
+    base_url:
+      type: string
+      description: "The base URL of the API service endpoint."
+    model_name:
+      type: string
+      description: "The model identifier to use for requests."
+      minLength: 1
+  required: ["apiType", "apiKey", "model_name"]
+commandFunction:
+  |-
+  (config) => ({
+    "command": "node",
+    "args": [
+      "dist/index.js"
+    ],
+    "env": {
+      "API_TYPE": config.apiType,
+      "API_KEY": config.apiKey,
+      "BASE_URL": config.base_url,
+      "MODEL_NAME": config.model_name
+    }
+  })

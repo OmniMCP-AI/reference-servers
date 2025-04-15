@@ -1,0 +1,27 @@
+# omnimcp.ai configuration
+startCommand:
+  type: stdio
+configSchema:
+  type: object
+  properties:
+    stdio:
+      type: boolean
+      description: Use stdio to start the server
+      default: true
+      required: true
+    jarPath:
+      type: string
+      description: Path to the JAR file
+      required: true
+commandFunction:
+  # A function that produces the CLI command to start the MCP on stdio.
+  |-
+  (config) => ({
+    "command": "java",
+    "args": [
+      "-Dspring.ai.mcp.server.stdio=" + config.stdio,
+      "-jar",
+      config.jarPath
+    ],
+    "env": {}
+  })

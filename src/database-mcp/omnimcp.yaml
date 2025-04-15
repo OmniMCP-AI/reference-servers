@@ -1,0 +1,51 @@
+# omnimcp.ai configuration
+startCommand:
+  type: stdio
+configSchema:
+  type: object
+  properties:
+    dbType:
+      type: string
+      description: Database type (mysql, postgres, sqlite, sqlserver, clickhouse)
+      enum: ["mysql", "postgres", "sqlite", "sqlserver", "clickhouse"]
+    dbHost:
+      type: string
+      description: Database host
+    dbPort:
+      type: integer
+      description: Database port
+    dbUser:
+      type: string
+      description: Database username
+    dbPass:
+      type: string
+      description: Database password
+    dbName:
+      type: string
+      description: Database name
+    dbSSLMode:
+      type: string
+      description: SSL mode (for PostgreSQL)
+      enum: ["disable", "require", "verify-ca", "verify-full"]
+    dbFile:
+      type: string
+      description: Database file (for SQLite)
+  required: ["dbType", "dbHost", "dbPort", "dbUser", "dbPass", "dbName"]
+commandFunction:
+  |-
+  (config) => ({
+    "command": "./database-mcp",
+    "args": [
+      `--db-type=${config.dbType}`,
+      `--db-host=${config.dbHost}`,
+      `--db-port=${config.dbPort}`,
+      `--db-user=${config.dbUser}`,
+      `--db-pass=${config.dbPass}`,
+      `--db-name=${config.dbName}`,
+      ...(config.dbSSLMode ? [`--db-ssl-mode=${config.dbSSLMode}`] : []),
+      ...(config.dbFile ? [`--db-file=${config.dbFile}`] : [])
+    ],
+    "env": {
+      "DATABASE_URL": `${config.dbType}://${config.dbUser}:${config.dbPass}@${config.dbHost}:${config.dbPort}/${config.dbName}`
+    }
+  })

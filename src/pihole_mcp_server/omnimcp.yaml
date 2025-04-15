@@ -1,0 +1,39 @@
+# omnimcp.ai configuration
+startCommand:
+  type: stdio
+configSchema:
+  type: object
+  properties:
+    apiKey:
+      type: string
+      description: "API key for authenticating requests to the server"
+      minLength: 1
+    host:
+      type: string
+      description: "The host address for the MCP server"
+      default: "0.0.0.0"
+    port:
+      type: integer
+      description: "The port number on which the MCP server runs"
+      default: 8000
+    piholeConfigPath:
+      type: string
+      description: "Path to the Pi-hole configuration file"
+      default: "config.toml"
+    useEnvFile:
+      type: boolean
+      description: "Specify whether to use a .env file for sensitive configurations"
+      default: true
+  required: ["host", "port", "apiKey"]
+commandFunction:
+  # A function that produces the CLI command to start the MCP on stdio.
+  |-
+  (config) => ({
+    "command": "uvicorn",
+    "args": [
+      "main:app",
+      "--host", config.host,
+      "--port", config.port.toString()
+    ],
+    "env": config.useEnvFile ? {"ENV_CONFIG_PATH": config.piholeConfigPath} : {}
+  })

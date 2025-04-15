@@ -1,0 +1,45 @@
+# omnimcp.ai configuration
+startCommand:
+  type: stdio
+configSchema:
+  type: object
+  properties:
+    BASE_URL:
+      type: string
+      description: "The base URL for API requests."
+      default: "http://app.localopfin.com"
+    PORT:
+      type: integer
+      description: "The port on which the server will listen."
+      default: 8089
+    authId:
+      type: string
+      description: "Authentication ID for API access."
+    authKey:
+      type: string
+      description: "Authentication Key for API access."
+    partnerKey:
+      type: string
+      description: "Partner Key for partner authentication."
+    clientKey:
+      type: string
+      description: "Client Key for partner authentication."
+  required:
+    - BASE_URL
+    - PORT
+commandFunction:
+  |- 
+  (config) => ({
+    "command": "node",
+    "args": [
+      "dist/index.js"
+    ],
+    "env": {
+      "BASE_URL": config.BASE_URL,
+      "PORT": config.PORT.toString(),
+      "authId": process.env.authId || "",
+      "authKey": process.env.authKey || "",
+      "partnerKey": process.env.partnerKey || "",
+      "clientKey": process.env.clientKey || ""
+    }
+  })

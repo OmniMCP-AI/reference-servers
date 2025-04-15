@@ -1,0 +1,36 @@
+# omnimcp.ai configuration
+startCommand:
+  type: stdio
+configSchema:
+  type: object
+  properties:
+    OPENAI_API_KEY:
+      type: string
+      description: API key for OpenAI service
+    ANTHROPIC_API_KEY:
+      type: string
+      description: API key for Anthropic service
+    PERPLEXITY_API_KEY:
+      type: string
+      description: API key for Perplexity service
+    GEMINI_API_KEY:
+      type: string
+      description: API key for Google Gemini service
+  required: []
+commandFunction:
+  |-
+  (config) => ({
+    "command": "uv",
+    "args": [
+      "--directory",
+      "/multi-llm-cross-check-mcp-server",
+      "run",
+      "main.py"
+    ],
+    "env": {
+      "OPENAI_API_KEY": config.OPENAI_API_KEY || '',
+      "ANTHROPIC_API_KEY": config.ANTHROPIC_API_KEY || '',
+      "PERPLEXITY_API_KEY": config.PERPLEXITY_API_KEY || '',
+      "GEMINI_API_KEY": config.GEMINI_API_KEY || ''
+    }
+  })

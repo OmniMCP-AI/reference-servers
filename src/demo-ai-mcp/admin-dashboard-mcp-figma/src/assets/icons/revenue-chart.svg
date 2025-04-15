@@ -1,0 +1,13 @@
+<svg width="600" height="250" viewBox="0 0 600 250" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background Grid Lines -->
+  <line x1="0" y1="50" x2="600" y2="50" stroke="#EAEAEA" stroke-width="1" />
+  <line x1="0" y1="100" x2="600" y2="100" stroke="#EAEAEA" stroke-width="1" />
+  <line x1="0" y1="150" x2="600" y2="150" stroke="#EAEAEA" stroke-width="1" />
+  <line x1="0" y1="200" x2="600" y2="200" stroke="#EAEAEA" stroke-width="1" />
+
+  <!-- Profit Area -->
+  <path d="M50,200 L50,150 C70,120 90,140 110,130 C130,120 150,90 170,100 C190,110 210,90 230,70 C250,50 270,60 290,40 C310,20 330,10 350,30 C370,50 390,30 410,20 C430,10 450,5 470,15 C490,25 510,10 530,5 L530,200 Z" fill="#DBA5FF" opacity="0.78" class="revenue-profit" />
+
+  <!-- Sales Area -->
+  <path d="M50,200 L50,170 C70,150 90,160 110,150 C130,140 150,120 170,130 C190,140 210,120 230,100 C250,80 270,90 290,70 C310,50 330,40 350,60 C370,80 390,60 410,50 C430,40 450,30 470,40 C490,50 510,35 530,25 L530,200 Z" fill="rgba(255, 143, 109, 0.8)" class="revenue-sales" />
+</svg> 

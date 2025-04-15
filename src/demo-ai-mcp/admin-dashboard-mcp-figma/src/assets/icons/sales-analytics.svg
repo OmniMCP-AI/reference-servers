@@ -1,0 +1,29 @@
+<svg width="600" height="250" viewBox="0 0 600 250" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Profit Line -->
+  <path d="M50,200 C70,150 90,180 110,160 C130,140 150,110 170,130 C190,150 210,120 230,100 C250,80 270,90 290,70 C310,50 330,40 350,60 C370,80 390,60 410,50 C430,40 450,30 470,40 C490,50 510,30 530,20" stroke="#00B69B" stroke-width="4" fill="none" class="profit-line"/>
+  
+  <!-- Sales Line -->
+  <path d="M50,220 C70,190 90,200 110,180 C130,160 150,140 170,160 C190,180 210,150 230,130 C250,110 270,120 290,100 C310,80 330,70 350,90 C370,110 390,90 410,80 C430,70 450,60 470,70 C490,80 510,60 530,50" stroke="#4880FF" stroke-width="4" fill="none" class="sales-line"/>
+  
+  <!-- Profit Points -->
+  <circle cx="50" cy="200" r="4" fill="#00B69B" stroke="white" stroke-width="1.4" class="profit-point"/>
+  <circle cx="110" cy="160" r="4" fill="#00B69B" stroke="white" stroke-width="1.4" class="profit-point"/>
+  <circle cx="170" cy="130" r="4" fill="#00B69B" stroke="white" stroke-width="1.4" class="profit-point"/>
+  <circle cx="230" cy="100" r="4" fill="#00B69B" stroke="white" stroke-width="1.4" class="profit-point"/>
+  <circle cx="290" cy="70" r="4" fill="#00B69B" stroke="white" stroke-width="1.4" class="profit-point"/>
+  <circle cx="350" cy="60" r="4" fill="#00B69B" stroke="white" stroke-width="1.4" class="profit-point"/>
+  <circle cx="410" cy="50" r="4" fill="#00B69B" stroke="white" stroke-width="1.4" class="profit-point"/>
+  <circle cx="470" cy="40" r="4" fill="#00B69B" stroke="white" stroke-width="1.4" class="profit-point"/>
+  <circle cx="530" cy="20" r="4" fill="#00B69B" stroke="white" stroke-width="1.4" class="profit-point"/>
+  
+  <!-- Sales Points -->
+  <circle cx="50" cy="220" r="4" fill="#4880FF" stroke="white" stroke-width="1.4" class="sales-point"/>
+  <circle cx="110" cy="180" r="4" fill="#4880FF" stroke="white" stroke-width="1.4" class="sales-point"/>
+  <circle cx="170" cy="160" r="4" fill="#4880FF" stroke="white" stroke-width="1.4" class="sales-point"/>
+  <circle cx="230" cy="130" r="4" fill="#4880FF" stroke="white" stroke-width="1.4" class="sales-point"/>
+  <circle cx="290" cy="100" r="4" fill="#4880FF" stroke="white" stroke-width="1.4" class="sales-point"/>
+  <circle cx="350" cy="90" r="4" fill="#4880FF" stroke="white" stroke-width="1.4" class="sales-point"/>
+  <circle cx="410" cy="80" r="4" fill="#4880FF" stroke="white" stroke-width="1.4" class="sales-point"/>
+  <circle cx="470" cy="70" r="4" fill="#4880FF" stroke="white" stroke-width="1.4" class="sales-point"/>
+  <circle cx="530" cy="50" r="4" fill="#4880FF" stroke="white" stroke-width="1.4" class="sales-point"/>
+</svg> 

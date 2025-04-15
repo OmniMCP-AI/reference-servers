@@ -1,0 +1,21 @@
+# omnimcp.ai configuration
+startCommand:
+  type: stdio
+configSchema:
+  type: object
+  properties:
+    port:
+      type: integer
+      description: "Port number on which the server will run"
+      default: 3000
+  required: ["port"]
+commandFunction:
+  |- 
+  (config) => ({
+    "command": "python",
+    "args": [
+      "server.py",
+      `--port=${config.port}`
+    ],
+    "env": {}
+  })

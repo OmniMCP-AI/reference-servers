@@ -1,0 +1,21 @@
+# omnimcp.ai configuration
+startCommand:
+  type: stdio
+configSchema:
+  type: object
+  properties:
+    runPodApiKey:
+      type: string
+      description: "Your RunPod API key required to authenticate and interact with the RunPod API."
+      default: ""
+      isRequired: true
+commandFunction: |-
+  (config) => ({
+    "command": "node",
+    "args": [
+      "dist/index.js"
+    ],
+    "env": {
+      "RUNPOD_API_KEY": config.runPodApiKey
+    }
+  })

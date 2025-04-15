@@ -1,0 +1,43 @@
+# omnimcp.ai configuration
+startCommand:
+  type: stdio
+configSchema:
+  type: object
+  properties:
+    serverName:
+      type: string
+      description: The name of the MCP server.
+      required: true
+    apiKeys:
+      type: object
+      description: API keys for different providers.
+      properties:
+        fireworksAI:
+          type: string
+          description: API key for Fireworks AI provider.
+        groq:
+          type: string
+          description: API key for Groq provider.
+    nodeVersion:
+      type: string
+      description: Version of Node.js required.
+      pattern: "^v20\\.16\\.0$"
+    npmVersion:
+      type: string
+      description: Version of npm required.
+      pattern: "^10\\.8\\.1$"
+required:
+  - serverName
+commandFunction:
+  |-
+  (config) => ({
+    "command": "node",
+    "args": [
+      "dist/index.js"
+    ],
+    "env": {
+      "NODE_ENV": "production",
+      "FIREWORKS_API_KEY": config.apiKeys?.fireworksAI || '',
+      "GROQ_API_KEY": config.apiKeys?.groq || ''
+    }
+  })

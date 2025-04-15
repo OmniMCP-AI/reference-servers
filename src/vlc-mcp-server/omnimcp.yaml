@@ -1,0 +1,45 @@
+# omnimcp.ai configuration
+startCommand:
+  type: stdio
+configSchema:
+  type: object
+  properties:
+    ANTHROPIC_API_KEY:
+      type: string
+      description: "API key for using Claude-haiku to summarize videos."
+      minLength: 1
+    ROOT_VIDEO_FOLDER:
+      type: string
+      description: "Path to the video folder."
+      minLength: 1
+    VLC_HTTP_HOST:
+      type: string
+      description: "Host for VLC HTTP interface."
+      default: "localhost"
+    VLC_HTTP_PORT:
+      type: string
+      description: "Port for VLC HTTP interface."
+      default: "8080"
+    VLC_HTTP_PASSWORD:
+      type: string
+      description: "Password for VLC HTTP interface."
+      minLength: 1
+  required:
+    - ANTHROPIC_API_KEY
+    - ROOT_VIDEO_FOLDER
+    - VLC_HTTP_PASSWORD
+commandFunction:
+  |-
+  (config) => ({
+    "command": "uvx",
+    "args": [
+      "vlc-mcp-server"
+    ],
+    "env": {
+      "ANTHROPIC_API_KEY": config.ANTHROPIC_API_KEY,
+      "ROOT_VIDEO_FOLDER": config.ROOT_VIDEO_FOLDER,
+      "VLC_HTTP_HOST": config.VLC_HTTP_HOST,
+      "VLC_HTTP_PORT": config.VLC_HTTP_PORT,
+      "VLC_HTTP_PASSWORD": config.VLC_HTTP_PASSWORD
+    }
+  })

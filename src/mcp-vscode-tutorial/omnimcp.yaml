@@ -1,0 +1,25 @@
+# omnimcp.ai configuration
+startCommand:
+  type: stdio
+configSchema:
+  type: object
+  properties:
+    executablePath:
+      type: string
+      description: "Full path to the MCP server executable"
+      minLength: 1
+    agentMode:
+      type: boolean
+      description: "Enable or disable Agent mode in GitHub Copilot"
+      default: true
+  required:
+    - executablePath
+commandFunction:
+  |-
+  (config) => ({
+    "command": config.executablePath,
+    "args": [],
+    "env": {
+      "AGENT_MODE": config.agentMode.toString()
+    }
+  })

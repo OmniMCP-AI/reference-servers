@@ -1,0 +1,24 @@
+{
+  "$schema": "https://raw.githubusercontent.com/jetify-com/devbox/0.14.0/.schema/devbox.schema.json",
+  "packages": [
+    "python@3.13",
+    "uv@0.6.10",
+    "cowsay@latest",
+    "git@latest",
+    "go-task@latest",
+    "pre-commit@latest",
+    "black@latest",
+    "sqlfluff@latest",
+    "nbstripout@latest",
+    "curl@latest",
+    "jq@latest"
+  ],
+  "shell": {
+    "init_hook": [
+      "cowsay \"Welcome to the MCP server demo shell environment!\""
+    ],
+    "scripts": {
+      "run-mcp-server": ["task mix-server:run"]
+    }
+  }
+}

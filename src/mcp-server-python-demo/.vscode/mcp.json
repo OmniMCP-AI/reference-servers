@@ -1,0 +1,8 @@
+{
+  "servers": {
+    "mix_server": {
+      "command": "uv",
+      "args": ["--directory", "/workspaces/mcp-server-python-demo/mix_server", "run", "main.py"]
+    }
+  }
+}

@@ -1,0 +1,49 @@
+version: '3'
+
+dotenv: ['.env', '{{.ENV}}/.env.', '{{.HOME}}/.env']
+
+tasks:
+  default:
+    desc: List tasks (default)
+    cmds:
+      - cmd: task -l
+        silent: true
+
+  devbox:update:
+    desc: Update the devbox lock file
+    cmds:
+      - devbox update
+
+  devbox:devcontainer:generate:
+    desc: Generates a vscode devcontainer based on the devbox config
+    cmds:
+      - devbox generate devcontainer
+
+  uv:project:init:
+    desc: Initializes project
+    cmds:
+      - uv init mix_server
+
+  uv:project:dependencies:add:
+    desc: Add dependencies
+    dir: mix_server
+    cmds:
+      - uv add "mcp[cli]" pandas pyarrow
+
+  mix-server:convert-csv-to-parquet:
+    desc: Converts csv to parquet so we can use it for development
+    dir: mix_server
+    cmds:
+      - uv run generate_parquet.py
+
+  mix-server:run:
+    desc: Run MCP server
+    dir: mix_server
+    cmds:
+      - uv run main.py
+
+  # mix_server:test:
+  #   desc: Test the project
+  #   dir: mix_server
+  #   cmds:
+  #     - uv run pytest

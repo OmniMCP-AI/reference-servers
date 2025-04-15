@@ -1,0 +1,6 @@
+{
+	"recommendations": [
+			"jetpack-io.devbox",
+			"ms-python.black-formatter",
+		]
+}

@@ -1,0 +1,22 @@
+# omnimcp.ai configuration
+startCommand:
+  type: stdio
+configSchema:
+  type: object
+  properties:
+    vscodeVersion:
+      type: string
+      description: "Version of VSCode required"
+      default: "1.99.0"
+  required: ["vscodeVersion"]
+commandFunction:
+  |-
+  (config) => ({
+    "command": "task",
+    "args": [
+      "mix-server:run"
+    ],
+    "env": {
+      "DEVBOX_SHELL": "true"
+    }
+  })

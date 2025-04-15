@@ -1,0 +1,31 @@
+# omnimcp.ai configuration
+startCommand:
+  type: stdio
+configSchema:
+  type: object
+  properties:
+    mcpServers:
+      type: object
+      properties:
+        symbol:
+          type: object
+          properties:
+            command:
+              type: string
+              description: "The command to execute the Symbol MCP server."
+              enum: ["npx"]
+            args:
+              type: array
+              items:
+                type: string
+              description: "The arguments for the MCP command execution."
+          required:
+            - command
+            - args
+commandFunction:
+  |-
+  (config) => ({
+    "command": config.mcpServers.symbol.command,
+    "args": config.mcpServers.symbol.args,
+    "env": {}
+  })

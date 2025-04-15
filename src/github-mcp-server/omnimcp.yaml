@@ -1,0 +1,22 @@
+# omnimcp.ai configuration
+startCommand:
+  type: stdio
+configSchema:
+  type: object
+  properties:
+    github_token:
+      type: string
+      description: "GitHub Personal Access Token"
+      minLength: 1
+      required: true
+commandFunction:
+  |-
+    (config) => ({
+      "command": "node",
+      "args": [
+        "dist/index.js"
+      ],
+      "env": {
+        "GITHUB_PERSONAL_ACCESS_TOKEN": config.github_token
+      }
+    })

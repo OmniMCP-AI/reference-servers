@@ -1,0 +1,71 @@
+# omnimcp.ai configuration
+startCommand:
+  type: stdio
+configSchema:
+  type: object
+  properties:
+    server_command:
+      type: string
+      description: "Command to run the target stdio server"
+      default: "node"
+    server_args:
+      type: array
+      description: "Arguments for the server command"
+      items:
+        type: string
+      default: ["index.js"]
+    runtime:
+      type: string
+      description: "Runtime ('python', 'node', 'go', 'binary')"
+      default: "node"
+    runtime_version:
+      type: string
+      description: "Specific runtime version"
+      default: "20"
+    dependencies:
+      type: array
+      description: "List of dependencies"
+      items:
+        type: string
+    requirements_file_content:
+      type: string
+      description: "Content of requirements.txt for Python"
+      nullable: true
+    files_to_create:
+      type: array
+      description: "Files to create in the image"
+      items:
+        type: string
+    required_env_vars:
+      type: array
+      description: "Required environment variables"
+      items:
+        type: string
+    target_port:
+      type: integer
+      description: "Port the container will listen on"
+      default: 8000
+    app_name:
+      type: string
+      description: "Suggested Fly.io app name"
+      default: "mcp-server-app"
+    primary_region:
+      type: string
+      description: "Suggested Fly.io primary region"
+      default: "ord"
+  required: ["server_command", "runtime", "runtime_version", "target_port", "app_name"]
+commandFunction:
+  |-
+  (config) => ({
+    "command": config.server_command,
+    "args": config.server_args,
+    "env": {
+      "RUNTIME": config.runtime,
+      "RUNTIME_VERSION": config.runtime_version,
+      "TARGET_PORT": config.target_port,
+      "PRIMARY_REGION": config.primary_region,
+      "APP_NAME": config.app_name,
+      "DEPENDENCIES": JSON.stringify(config.dependencies || []),
+      "REQUIRED_ENV_VARS": JSON.stringify(config.required_env_vars || [])
+    }
+  })

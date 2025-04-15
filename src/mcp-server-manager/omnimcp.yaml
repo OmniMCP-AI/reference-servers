@@ -1,0 +1,37 @@
+# omnimcp.ai configuration
+startCommand:
+  type: stdio
+configSchema:
+  type: object
+  properties:
+    pythonVersion:
+      type: string
+      description: "Python version required."
+      default: "3.10+"
+    platform:
+      type: string
+      description: "Supported platforms for the server."
+      enum: ["Windows", "macOS", "Linux"]
+      default: "Windows"
+    serverDirectory:
+      type: string
+      description: "Directory where servers are managed."
+      default: "mcp_server"
+    logDirectory:
+      type: string
+      description: "Directory for storing execution logs."
+      default: "logs/"
+  required: ["pythonVersion", "platform", "serverDirectory", "logDirectory"]
+commandFunction:
+  |-
+  (config) => ({
+    command: "python",
+    args: [
+      "main.py"
+    ],
+    env: {
+      PYTHON_VERSION: config.pythonVersion,
+      SERVER_DIRECTORY: config.serverDirectory,
+      LOG_DIRECTORY: config.logDirectory
+    }
+  })

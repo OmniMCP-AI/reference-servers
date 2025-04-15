@@ -1,0 +1,112 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "OpenStreetMap MCP Server API",
+    "version": "1.0.0",
+    "description": "API documentation for the OpenStreetMap MCP Server"
+  },
+  "paths": {
+    "/api/v1/map/tile/{z}/{x}/{y}": {
+      "get": {
+        "summary": "Get map tile",
+        "parameters": [
+          {
+            "name": "z",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "integer" },
+            "description": "Zoom level"
+          },
+          {
+            "name": "x",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "integer" },
+            "description": "X coordinate"
+          },
+          {
+            "name": "y",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "integer" },
+            "description": "Y coordinate"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Map tile image",
+            "content": {
+              "image/png": {
+                "schema": {
+                  "type": "string",
+                  "format": "binary"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/map/info": {
+      "get": {
+        "summary": "Get map information",
+        "responses": {
+          "200": {
+            "description": "Map information",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "name": { "type": "string" },
+                    "version": { "type": "string" },
+                    "description": { "type": "string" },
+                    "attribution": { "type": "string" },
+                    "tileFormat": { "type": "string" },
+                    "minZoom": { "type": "integer" },
+                    "maxZoom": { "type": "integer" }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/map/search": {
+      "get": {
+        "summary": "Search for locations",
+        "parameters": [
+          {
+            "name": "q",
+            "in": "query",
+            "required": true,
+            "schema": { "type": "string" },
+            "description": "Search query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Search results",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "place_id": { "type": "integer" },
+                      "lat": { "type": "string" },
+                      "lon": { "type": "string" },
+                      "display_name": { "type": "string" }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

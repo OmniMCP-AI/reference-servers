@@ -1,0 +1,41 @@
+# omnimcp.ai configuration
+startCommand:
+  type: stdio
+configSchema:
+  type: object
+  properties:
+    stationCode:
+      type: string
+      description: The code of the station to get live status for
+      required: false
+    from:
+      type: string
+      description: Source station code
+      required: false
+    to:
+      type: string
+      description: Destination station code
+      required: false
+    date:
+      type: string
+      description: Date in YYYY-MM-DD format
+      required: false
+    trainNo:
+      type: string
+      description: Train number
+      required: false
+    pnr:
+      type: string
+      description: PNR number
+      required: false
+commandFunction:
+  |-
+  (config) => ({
+    "command": "node",
+    "args": [
+      "dist/index.js"
+    ],
+    "env": {
+      "NODE_ENV": "production"
+    }
+  })

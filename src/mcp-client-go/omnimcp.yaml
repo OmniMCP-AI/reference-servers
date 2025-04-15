@@ -1,0 +1,25 @@
+# omnimcp.ai configuration
+startCommand:
+  type: stdio
+configSchema:
+  properties:
+    AmapApiKey:
+      type: string
+      description: "API Key for accessing Amap Maps service"
+      required: true
+    NodePath:
+      type: string
+      description: "Path to Node.js binary"
+      required: true
+  type: object
+commandFunction:
+  |- 
+  (config) => ({
+    "command": config.NodePath || "node",
+    "args": [
+      "dist/index.js"
+    ],
+    "env": {
+      "AMAP_MAPS_API_KEY": config.AmapApiKey
+    }
+  })

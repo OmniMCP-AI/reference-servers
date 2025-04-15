@@ -1,0 +1,24 @@
+# omnimcp.ai configuration
+startCommand:
+  type: stdio
+configSchema:
+  type: object
+  properties:
+    tool_type:
+      type: string
+      description: Type of agent tool to use, either "google" or "langgraph".
+      enum: ["google", "langgraph"]
+      default: "google"
+required:
+  - tool_type
+commandFunction:
+  |-
+  (config) => ({
+    "command": "python",
+    "args": [
+      config.tool_type === "google" ? "app_client_adk.py" : "app_client_langgraph.py"
+    ],
+    "env": {
+      "PYTHONUNBUFFERED": "1"
+    }
+  })

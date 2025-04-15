@@ -1,0 +1,35 @@
+# omnimcp.ai configuration
+startCommand:
+  type: stdio
+configSchema:
+  type: object
+  properties:
+    SUPABASE_URL:
+      type: string
+      description: URL for the Supabase database.
+      minLength: 1
+    SUPABASE_ANON_KEY:
+      type: string
+      description: Anonymous key for Supabase authentication.
+      minLength: 1
+    NEXT_PUBLIC_WEB_URL:
+      type: string
+      description: URL for the web application.
+      minLength: 1
+  required:
+    - SUPABASE_URL
+    - SUPABASE_ANON_KEY
+    - NEXT_PUBLIC_WEB_URL
+commandFunction:
+  |-
+  (config) => ({
+    "command": "pnpm",
+    "args": [
+      "dev"
+    ],
+    "env": {
+      "SUPABASE_URL": config.SUPABASE_URL,
+      "SUPABASE_ANON_KEY": config.SUPABASE_ANON_KEY,
+      "NEXT_PUBLIC_WEB_URL": config.NEXT_PUBLIC_WEB_URL
+    }
+  })

@@ -1,0 +1,32 @@
+{
+    "response_types_supported": [
+        "vp_token",
+        "id_token"
+    ],
+    "response_modes_supported": [
+        "query"
+    ],
+    "subject_types_supported": [
+        "public"
+    ],
+    "vp_formats": {
+        "vc+sd-jwt": {
+            "sd-jwt_alg_values": [
+                "ES256",
+                "ES256K",
+                "EdDSA"
+            ],
+            "kb-jwt_alg_values": [
+                "ES256",
+                "ES256K",
+                "EdDSA"
+            ]
+        }
+    },
+    "subject_syntax_types_supported": [
+        "urn:ietf:params:oauth:jwk-thumbprint", 
+        "did:key",
+        "did:jwk"
+    ],
+    "client_name": "Talao Verifier V 0.1"
+}

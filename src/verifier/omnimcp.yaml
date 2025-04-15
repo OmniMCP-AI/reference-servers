@@ -1,0 +1,30 @@
+# omnimcp.ai configuration
+startCommand:
+  type: stdio
+configSchema:
+  type: object
+  properties:
+    redisUrl:
+      type: string
+      description: The URL for the Redis server to be used for session storage.
+      minLength: 1
+    port:
+      type: number
+      description: Port on which the MCP server will listen.
+      minimum: 1
+      maximum: 65535
+  required:
+    - redisUrl
+    - port
+commandFunction:
+  |- 
+  (config) => ({
+    "command": "python",
+    "args": [
+      "server.py"
+    ],
+    "env": {
+      "REDIS_URL": config.redisUrl,
+      "PORT": config.port.toString()
+    }
+  })

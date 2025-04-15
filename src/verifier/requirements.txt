@@ -1,0 +1,14 @@
+Flask
+redis
+Flask-Session
+Flask[async]
+Flask-QRcode
+jwcrypto
+gevent
+gunicorn
+base58
+requests
+Flask-Mobility
+pkce
+gevent
+

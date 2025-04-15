@@ -1,0 +1,32 @@
+# omnimcp.ai configuration
+startCommand:
+  type: stdio
+configSchema:
+  type: object
+  properties:
+    blenderPath:
+      type: string
+      description: Path to the Blender executable.
+      minLength: 1
+    pythonPath:
+      type: string
+      description: Path to the Python executable used by Blender.
+      minLength: 1
+    uvInstalled:
+      type: boolean
+      description: Confirmation if the 'uv' package manager is installed.
+      default: false
+  required: ["blenderPath", "pythonPath", "uvInstalled"]
+commandFunction:
+  |-
+  (config) => ({
+    "command": "uvx",
+    "args": [
+      "blender-mcp"
+    ],
+    "env": {
+      "BLENDER_PATH": config.blenderPath,
+      "PYTHON_PATH": config.pythonPath,
+      "UV_INSTALLED": config.uvInstalled.toString()
+    }
+  })

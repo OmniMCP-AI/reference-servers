@@ -1,0 +1,32 @@
+# omnimcp.ai configuration
+startCommand:
+  type: stdio
+configSchema:
+  type: object
+  properties:
+    playwrightInstalled:
+      type: boolean
+      description: Indicates whether Playwright is installed
+      default: true
+    nodeVersion:
+      type: string
+      description: Specifies the Node.js version required
+      default: ">=16"
+    cookieFilePath:
+      type: string
+      description: Path to the cookie file for session persistence
+      default: "~/.mcp/rednote/cookies.json"
+  required:
+    - playwrightInstalled
+commandFunction:
+  |-
+  (config) => ({
+    "command": "npx",
+    "args": [
+      "rednote-mcp",
+      "--stdio"
+    ],
+    "env": {
+      "NODE_ENV": "production"
+    }
+  })

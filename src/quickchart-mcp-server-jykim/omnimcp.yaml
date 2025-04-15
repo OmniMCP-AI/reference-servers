@@ -1,0 +1,35 @@
+# omnimcp.ai configuration
+startCommand:
+  type: stdio
+configSchema:
+  type: object
+  properties:
+    chartType:
+      type: string
+      description: "Type of chart to generate (e.g., bar, line, pie)"
+      enum: ["bar", "line", "pie", "doughnut", "radar", "polarArea", "scatter", "bubble", "radialGauge", "speedometer"]
+    labels:
+      type: array
+      items:
+        type: string
+      description: "Labels for the chart data"
+    datasets:
+      type: array
+      items:
+        type: object
+      description: "Data sets for the chart with optional settings like backgroundColor"
+    options:
+      type: object
+      description: "Additional options for Chart.js configuration"
+  required: ["chartType", "labels", "datasets"]
+commandFunction:
+  |- 
+  (config) => ({
+    "command": "node",
+    "args": [
+      "dist/index.js"
+    ],
+    "env": {
+      "QUICKCHART_API_KEY": process.env.QUICKCHART_API_KEY, // Example of environment variable if needed
+    }
+  })

@@ -1,0 +1,25 @@
+# omnimcp.ai configuration
+startCommand:
+  type: stdio
+configSchema:
+  type: object
+  properties:
+    api_key:
+      type: string
+      description: Authentication key for the GPT4O Image Generator API
+      required: true
+    Ghibli_API_URL:
+      type: string
+      description: Base URL for the Ghibli API
+      default: "https://www.gpt4oimg.com"
+      required: false
+commandFunction: |-
+  (config) => ({
+    "command": "node",
+    "args": [
+      "dist/index.js"
+    ],
+    "env": {
+      "Ghibli_API_URL": config.Ghibli_API_URL || "https://www.gpt4oimg.com"
+    }
+  })

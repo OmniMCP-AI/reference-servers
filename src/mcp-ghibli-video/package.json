@@ -1,0 +1,27 @@
+{
+  "name": "@openmcprouter/mcp-server-ghibli-video",
+  "version": "0.1.0",
+  "description": "ghibli mcp video server",
+  "private": false,
+  "type": "module",
+  "homepage":"https://github.com/MichaelYangjson/mcp-ghibli-video",
+  "bin": {
+    "mcp-server-ghibli": "./build/index.js"
+  },
+  "files": [
+    "build"
+  ],
+  "scripts": {
+    "build": "tsc && node -e \"require('fs').chmodSync('build/index.js', '755')\"",
+    "prepare": "npm run build",
+    "watch": "tsc --watch",
+    "inspector": "npx @modelcontextprotocol/inspector build/index.js --port 6279 --debug --verbose --open"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "0.6.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.11.24",
+    "typescript": "^5.3.3"
+  }
+}

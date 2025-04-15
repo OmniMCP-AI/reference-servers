@@ -1,0 +1,55 @@
+# omnimcp.ai configuration
+startCommand:
+  type: stdio
+configSchema:
+  type: object
+  properties:
+    API_BASE_URL:
+      type: string
+      description: "The base URL for the Writeathon API"
+      default: "https://api.writeathon.cn"
+    WRITEATHON_USER_ID:
+      type: string
+      description: "Your Writeathon user ID"
+      minLength: 1
+      maxLength: 255
+    WRITEATHON_TOKEN:
+      type: string
+      description: "Your integration token from Writeathon"
+      minLength: 1
+      maxLength: 255
+    PORT:
+      type: integer
+      description: "The port number on which the server will run"
+      default: 3000
+      minimum: 1
+      maximum: 65535
+    HOST:
+      type: string
+      description: "The host on which the server will run"
+      default: "localhost"
+    MCP_API_KEY:
+      type: string
+      description: "Your MCP API key"
+      minLength: 1
+      maxLength: 255
+  required:
+    - WRITEATHON_USER_ID
+    - WRITEATHON_TOKEN
+    - MCP_API_KEY
+commandFunction:
+  |-
+  (config) => ({
+    "command": "node",
+    "args": [
+      "dist/index.js"
+    ],
+    "env": {
+      "API_BASE_URL": config.API_BASE_URL,
+      "WRITEATHON_USER_ID": config.WRITEATHON_USER_ID,
+      "WRITEATHON_TOKEN": config.WRITEATHON_TOKEN,
+      "PORT": config.PORT.toString(),
+      "HOST": config.HOST,
+      "MCP_API_KEY": config.MCP_API_KEY
+    }
+  })

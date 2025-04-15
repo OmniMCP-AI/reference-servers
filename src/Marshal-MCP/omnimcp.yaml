@@ -1,0 +1,94 @@
+# omnimcp.ai configuration
+startCommand:
+  type: stdio
+configSchema:
+  type: object
+  properties:
+    vuln_name:
+      type: string
+      description: "漏洞名称"
+      minLength: 1
+    vuln_desc:
+      type: string
+      description: "漏洞描述/特征"
+      minLength: 1
+    urls:
+      type: array
+      items:
+        type: string
+      description: "需要扫描的URL列表"
+      minItems: 1
+    cluster:
+      type: string
+      description: "扫描集群"
+      minLength: 1
+    priority:
+      type: string
+      description: "优先级(high/medium/low)"
+      enum: ["high", "medium", "low"]
+      default: "low"
+    task_name:
+      type: string
+      description: "任务名称"
+      default: ""
+    task_num:
+      type: integer
+      description: "任务数量"
+      default: 100
+    cycle_scan:
+      type: boolean
+      description: "是否周期扫描"
+      default: false
+    domain:
+      type: string
+      description: "域名"
+    ip:
+      type: string
+      description: "IP地址"
+    port:
+      type: string
+      description: "扫描端口范围"
+      default: "1-65535"
+    engine:
+      type: string
+      description: "扫描引擎(naabu/osint)"
+      default: "naabu"
+    interval_days:
+      type: integer
+      description: "扫描间隔天数"
+      default: 7
+    server:
+      type: object
+      properties:
+        port:
+          type: integer
+          description: "MCP服务器端口"
+          default: 8000
+        timeout:
+          type: integer
+          description: "连接超时时间"
+          default: 60
+      required: ["port"]
+    api:
+      type: object
+      properties:
+        url:
+          type: string
+          description: "Marshal API服务地址"
+          minLength: 1
+        token:
+          type: string
+          description: "API认证令牌（必填）"
+          minLength: 1
+      required: ["url", "token"]
+  required: ["vuln_name", "vuln_desc", "urls", "cluster", "api"]
+commandFunction:
+  |-
+  (config) => ({
+    "command": "./marshal-mcp",
+    "args": ["--config=config/config.yaml"],
+    "env": {
+      "API_URL": config.api.url,
+      "API_TOKEN": config.api.token
+    }
+  })

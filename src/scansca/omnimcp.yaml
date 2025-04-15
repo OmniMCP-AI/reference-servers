@@ -1,0 +1,26 @@
+# omnimcp.ai configuration
+startCommand:
+  type: stdio
+configSchema:
+  type: object
+  properties:
+    databaseType:
+      type: string
+      description: Type of the database (e.g., postgresql)
+      enum: ["postgresql", "mysql", "sqlite", "dynamodb"]
+      default: "postgresql"
+    connectionString:
+      type: string
+      description: Connection string for the database
+  required: ["databaseType", "connectionString"]
+commandFunction: |-
+  (config) => ({
+    "command": "make",
+    "args": [
+      "run"
+    ],
+    "env": {
+      "DB_TYPE": config.databaseType,
+      "DB_CONNECTION_STRING": config.connectionString
+    }
+  })

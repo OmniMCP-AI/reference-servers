@@ -1,0 +1,35 @@
+# omnimcp.ai configuration
+startCommand:
+  type: stdio
+configSchema:
+  type: object
+  properties:
+    GEMINI_API_KEY:
+      type: string
+      description: Your Google Gemini API key
+      minLength: 1
+    NODEMAILER_EMAIL:
+      type: string
+      description: Your email address for sending emails
+      format: email
+    NODEMAILER_PASSWORD:
+      type: string
+      description: Your email app password (for Gmail, use an app password)
+      minLength: 1
+  required:
+    - GEMINI_API_KEY
+    - NODEMAILER_EMAIL
+    - NODEMAILER_PASSWORD
+commandFunction:
+  |-
+  (config) => ({
+    "command": "node",
+    "args": [
+      "dist/index.js"
+    ],
+    "env": {
+      "GEMINI_API_KEY": config.GEMINI_API_KEY,
+      "NODEMAILER_EMAIL": config.NODEMAILER_EMAIL,
+      "NODEMAILER_PASSWORD": config.NODEMAILER_PASSWORD
+    }
+  })

@@ -1,0 +1,36 @@
+# omnimcp.ai configuration
+startCommand:
+  type: stdio
+configSchema:
+  type: object
+  properties:
+    CLIENT_ID:
+      type: string
+      description: GitHub OAuth Client ID
+      required: true
+    CLIENT_SECRET:
+      type: string
+      description: GitHub OAuth Client Secret
+      required: true
+    REDIRECT_URI:
+      type: string
+      description: Redirect URI for GitHub OAuth
+      required: true
+    SESSION_SECRET:
+      type: string
+      description: Secret for session management
+      required: true
+commandFunction:
+  |-
+  (config) => ({
+    "command": "node",
+    "args": [
+      "server.js"
+    ],
+    "env": {
+      "CLIENT_ID": config.CLIENT_ID,
+      "CLIENT_SECRET": config.CLIENT_SECRET,
+      "REDIRECT_URI": config.REDIRECT_URI,
+      "SESSION_SECRET": config.SESSION_SECRET
+    }
+  })

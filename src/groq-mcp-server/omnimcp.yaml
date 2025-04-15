@@ -1,0 +1,27 @@
+# omnimcp.ai configuration
+startCommand:
+  type: stdio
+configSchema:
+  type: object
+  properties:
+    GROQ_API_KEY:
+      type: string
+      description: "Your Groq API key to access the services."
+      minLength: 1
+      required: true
+    BASE_OUTPUT_PATH:
+      type: string
+      description: "Optional path where to save generated files."
+      required: false
+commandFunction:
+  |-
+  (config) => ({
+    "command": "uvx",
+    "args": [
+      "groq-mcp"
+    ],
+    "env": {
+      "GROQ_API_KEY": config.GROQ_API_KEY,
+      "BASE_OUTPUT_PATH": config.BASE_OUTPUT_PATH || "~/Desktop"
+    }
+  })

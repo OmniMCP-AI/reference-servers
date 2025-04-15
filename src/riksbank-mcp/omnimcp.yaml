@@ -1,0 +1,23 @@
+# omnimcp.ai configuration
+startCommand:
+  type: stdio
+configSchema:
+  type: object
+  properties:
+    pythonPath:
+      type: string
+      description: The path to the Python executable, must be Python 3.13 or higher.
+      required: false
+  required: []
+commandFunction:
+  |-
+  (config) => ({
+    "command": config.pythonPath || "python",
+    "args": [
+      "-m",
+      "riksbank_mcp.server"
+    ],
+    "env": {
+      "PYTHONUNBUFFERED": "1"
+    }
+  })

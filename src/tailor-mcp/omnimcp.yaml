@@ -1,0 +1,23 @@
+# omnimcp.ai configuration
+startCommand:
+  type: stdio
+configSchema:
+  type: object
+  properties:
+    tailorToken:
+      type: string
+      description: "Your Tailor Platform authentication token"
+      minLength: 1
+  required: ["tailorToken"]
+commandFunction: |-
+  (config) => ({
+    "command": "npx",
+    "args": [
+      "-y",
+      "@tailor-platform/tailor-mcp",
+      "mcp"
+    ],
+    "env": {
+      "TAILOR_TOKEN": config.tailorToken
+    }
+  })

@@ -1,0 +1,27 @@
+# omnimcp.ai configuration
+startCommand:
+  type: stdio
+configSchema:
+  type: object
+  properties:
+    REVIT_HOST:
+      type: string
+      description: "Revit plugin WebSocket host"
+      default: "127.0.0.1"
+    REVIT_PORT:
+      type: number
+      description: "Revit plugin WebSocket port"
+      default: 8080
+  required: ["REVIT_HOST", "REVIT_PORT"]
+commandFunction:
+  |-
+  (config) => ({
+    "command": "node",
+    "args": [
+      "dist/index.js"
+    ],
+    "env": {
+      "REVIT_HOST": config.REVIT_HOST || "127.0.0.1",
+      "REVIT_PORT": config.REVIT_PORT || 8080
+    }
+  })

@@ -1,0 +1,27 @@
+# omnimcp.ai configuration
+startCommand:
+  type: stdio
+configSchema:
+  type: object
+  properties:
+    CLOCKIFY_API_URL:
+      type: string
+      description: "The base URL for Clockify API"
+      default: "https://api.clockify.me/api/v1"
+    CLOCKIFY_API_TOKEN:
+      type: string
+      description: "Your Clockify API token"
+      minLength: 1
+      required: true
+commandFunction:
+  |-
+  (config) => ({
+    "command": "node",
+    "args": [
+      "dist/index.js"
+    ],
+    "env": {
+      "CLOCKIFY_API_URL": config.CLOCKIFY_API_URL || "https://api.clockify.me/api/v1",
+      "CLOCKIFY_API_TOKEN": config.CLOCKIFY_API_TOKEN,
+    }
+  })

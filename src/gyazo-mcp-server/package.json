@@ -1,0 +1,29 @@
+{
+  "name": "gyazo-mcp-server",
+  "version": "0.1.0",
+  "description": "A MCP server for Gyazo",
+  "private": true,
+  "type": "module",
+  "bin": {
+    "gyazo-mcp-server": "./build/index.js"
+  },
+  "files": [
+    "build"
+  ],
+  "scripts": {
+    "build": "npx -y tsc && node -e \"require('fs').chmodSync('build/index.js', '755')\"",
+    "image:build": "docker build -t gyazo-mcp-server .",
+    "prepare": "npm run build",
+    "watch": "tsc --watch",
+    "inspector": "npx @modelcontextprotocol/inspector build/index.js",
+    "lint": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "1.8.0",
+    "dotenv": "^16.4.7"
+  },
+  "devDependencies": {
+    "@types/node": "^22.0.0",
+    "typescript": "^5.3.3"
+  }
+}

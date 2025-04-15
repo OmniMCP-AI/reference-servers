@@ -1,0 +1,22 @@
+# omnimcp.ai configuration
+startCommand:
+  type: stdio
+configSchema:
+  type: object
+  properties:
+    GYAZO_ACCESS_TOKEN:
+      type: string
+      description: "Your Gyazo API access token."
+      minLength: 1
+      required: true
+commandFunction:
+  |-
+  (config) => ({
+    "command": "node",
+    "args": [
+      "dist/index.js"
+    ],
+    "env": {
+      "GYAZO_ACCESS_TOKEN": config.GYAZO_ACCESS_TOKEN
+    }
+  })

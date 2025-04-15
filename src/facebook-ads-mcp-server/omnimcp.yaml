@@ -1,0 +1,23 @@
+# omnimcp.ai configuration
+startCommand:
+  type: stdio
+configSchema:
+  type: object
+  properties:
+    fbToken:
+      type: string
+      description: Facebook User Access Token with necessary permissions (e.g., ads_read).
+      required: true
+commandFunction:
+  |-
+  (config) => ({
+    "command": "python",
+    "args": [
+      "server.py",
+      "--fb-token",
+      config.fbToken
+    ],
+    "env": {
+      "PYTHONUNBUFFERED": "1"
+    }
+  })

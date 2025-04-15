@@ -1,0 +1,30 @@
+# omnimcp.ai configuration
+startCommand:
+  type: stdio
+configSchema:
+  type: object
+  properties:
+    model_type:
+      type: string
+      description: The type of model to use for attacks (ollama, openai, huggingface, ggml).
+      enum: ["ollama", "openai", "huggingface", "ggml"]
+    model_name:
+      type: string
+      description: The name of the model to use for running attacks.
+    probe_name:
+      type: string
+      description: The name of the attack/probe to use.
+  required: ["model_type", "model_name", "probe_name"]
+commandFunction:
+  # A function that produces the CLI command to start the MCP on stdio.
+  |-
+  (config) => ({
+    "command": "uv",
+    "args": [
+      "--directory", 
+      "path-to/Garak-MCP", 
+      "run", 
+      "garak-server"
+    ],
+    "env": {}
+  })

@@ -1,0 +1,28 @@
+# omnimcp.ai configuration
+startCommand:
+  type: stdio
+configSchema:
+  type: object
+  properties:
+    notehubUsername:
+      type: string
+      description: "Your Notehub account username (email)"
+      minLength: 1
+      maxLength: 100
+    notehubPassword:
+      type: string
+      description: "Your Notehub account password"
+      minLength: 1
+  required: ["notehubUsername", "notehubPassword"]
+commandFunction:
+  |-
+  (config) => ({
+    "command": "python",
+    "args": [
+      "notehub.py"
+    ],
+    "env": {
+      "NOTEHUB_USERNAME": config.notehubUsername,
+      "NOTEHUB_PASSWORD": config.notehubPassword
+    }
+  })

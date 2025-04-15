@@ -1,0 +1,27 @@
+# omnimcp.ai configuration
+startCommand:
+  type: stdio
+configSchema:
+  type: object
+  properties:
+    nodePath:
+      type: string
+      description: "Path to the Node.js executable"
+      default: "node"
+    scriptPath:
+      type: string
+      description: "Path to the server script (index.js)"
+      default: "dist/index.js"
+  required: ["nodePath", "scriptPath"]
+commandFunction:
+  # A function that produces the CLI command to start the MCP on stdio.
+  |-
+  (config) => ({
+    "command": config.nodePath,
+    "args": [
+      config.scriptPath
+    ],
+    "env": {
+      // Define any required environment variables here
+    }
+  })

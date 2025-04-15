@@ -1,0 +1,53 @@
+# omnimcp.ai configuration
+startCommand:
+  type: stdio
+configSchema:
+  type: object
+  properties:
+    TRANSPORT:
+      type: string
+      description: "Transport protocol to use (sse or stdio)"
+      enum: ["sse", "stdio"]
+      default: "stdio"
+    HOST:
+      type: string
+      description: "Host to bind to for SSE transport"
+      default: "0.0.0.0"
+    PORT:
+      type: integer
+      description: "Port to listen on when using SSE transport"
+      default: 8050
+    LLM_PROVIDER:
+      type: string
+      description: "LLM provider to use (openai, openrouter, or ollama)"
+      enum: ["openai", "openrouter", "ollama"]
+      default: "openai"
+    LLM_BASE_URL:
+      type: string
+      description: "Base URL for LLM API"
+      default: "https://api.openai.com/v1"
+    LLM_API_KEY:
+      type: string
+      description: "API key for the LLM provider"
+      minLength: 1
+    LLM_CHOICE:
+      type: string
+      description: "LLM model to use for task analysis"
+      default: "gpt-4"
+  required:
+    - LLM_API_KEY
+commandFunction:
+  |-
+  (config) => ({
+    command: "python3",
+    args: ["src/main.py"],
+    env: {
+      TRANSPORT: config.TRANSPORT,
+      HOST: config.HOST,
+      PORT: config.PORT.toString(),
+      LLM_PROVIDER: config.LLM_PROVIDER,
+      LLM_BASE_URL: config.LLM_BASE_URL,
+      LLM_API_KEY: config.LLM_API_KEY,
+      LLM_CHOICE: config.LLM_CHOICE
+    }
+  })

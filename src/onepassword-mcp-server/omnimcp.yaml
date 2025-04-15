@@ -1,0 +1,29 @@
+# omnimcp.ai configuration
+startCommand:
+  type: stdio
+configSchema:
+  type: object
+  properties:
+    opServiceAccountToken:
+      type: string
+      description: "1Password Service Account Token"
+      minLength: 1
+      required: true
+commandFunction:
+  |-
+  (config) => ({
+    "command": "uv",
+    "args": [
+      "run",
+      "--with",
+      "mcp[cli]",
+      "--with",
+      "onepassword-sdk",
+      "mcp",
+      "run",
+      "/your/dir/here/onepassword-mcp-server/server.py"
+    ],
+    "env": {
+      "OP_SERVICE_ACCOUNT_TOKEN": config.opServiceAccountToken
+    }
+  })

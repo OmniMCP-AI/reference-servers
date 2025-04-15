@@ -1,0 +1,35 @@
+# omnimcp.ai configuration
+startCommand:
+  type: stdio
+configSchema:
+  type: object
+  properties:
+    port:
+      type: integer
+      description: The port number to run the MCP server on.
+      default: 3000
+    logLevel:
+      type: string
+      description: The level of logging to output. Options are 'info', 'debug', 'warn', 'error'.
+      default: info
+    apiKey:
+      type: string
+      description: An API key required for authentication.
+      minLength: 1
+  required: ["apiKey"]
+commandFunction:
+  |-
+  (config) => ({
+    "command": "node",
+    "args": [
+      "dist/index.js",
+      "--port", config.port,
+      "--log-level", config.logLevel
+    ],
+    "env": {
+      "API_KEY": config.apiKey
+    }
+  })
+```
+
+This file defines a minimal configuration schema and startup command specification based on a hypothetical MCP server setup. Adjustments may be necessary to fit the actual specifics of your project as detailed within a complete README or project specification document.

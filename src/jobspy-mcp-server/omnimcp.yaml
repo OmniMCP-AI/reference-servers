@@ -1,0 +1,42 @@
+# omnimcp.ai configuration
+startCommand:
+  type: stdio
+configSchema:
+  type: object
+  properties:
+    JOBSPY_DOCKER_IMAGE:
+      type: string
+      description: Docker image to use for JobSpy.
+      default: "jobspy"
+    JOBSPY_ACCESS_TOKEN:
+      type: string
+      description: Access token for JobSpy API (if required).
+      default: ""
+    PORT:
+      type: integer
+      description: Port for the MCP server.
+      default: 9423
+    HOST:
+      type: string
+      description: Host for HTTP server.
+      default: "0.0.0.0"
+    ENABLE_SSE:
+      type: boolean
+      description: Enable Server-Sent Events transport.
+      default: false
+  required: ["PORT", "HOST"]
+commandFunction:
+  |-
+  (config) => ({
+    "command": "node",
+    "args": [
+      "dist/index.js"
+    ],
+    "env": {
+      "JOBSPY_DOCKER_IMAGE": config.JOBSPY_DOCKER_IMAGE,
+      "JOBSPY_ACCESS_TOKEN": config.JOBSPY_ACCESS_TOKEN || "",
+      "PORT": config.PORT.toString(),
+      "HOST": config.HOST,
+      "ENABLE_SSE": config.ENABLE_SSE ? "1" : "0"
+    }
+  })

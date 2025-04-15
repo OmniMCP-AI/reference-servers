@@ -1,0 +1,49 @@
+# omnimcp.ai configuration
+startCommand:
+  type: stdio
+configSchema:
+  type: object
+  properties:
+    PORT:
+      type: integer
+      description: Server port
+      default: 3000
+    NODE_ENV:
+      type: string
+      description: Environment (development, production)
+      enum: [development, production]
+    FALKORDB_HOST:
+      type: string
+      description: FalkorDB host
+      default: localhost
+    FALKORDB_PORT:
+      type: integer
+      description: FalkorDB port
+      default: 6379
+    FALKORDB_USERNAME:
+      type: string
+      description: Username for FalkorDB authentication
+    FALKORDB_PASSWORD:
+      type: string
+      description: Password for FalkorDB authentication
+    MCP_API_KEY:
+      type: string
+      description: API key for authenticating MCP requests
+  required:
+    - MCP_API_KEY
+commandFunction: |-
+  (config) => ({
+    "command": "node",
+    "args": [
+      "dist/index.js"
+    ],
+    "env": {
+      "PORT": config.PORT || 3000,
+      "NODE_ENV": config.NODE_ENV || "development",
+      "FALKORDB_HOST": config.FALKORDB_HOST || "localhost",
+      "FALKORDB_PORT": config.FALKORDB_PORT || 6379,
+      "FALKORDB_USERNAME": config.FALKORDB_USERNAME || "",
+      "FALKORDB_PASSWORD": config.FALKORDB_PASSWORD || "",
+      "MCP_API_KEY": config.MCP_API_KEY
+    }
+  })

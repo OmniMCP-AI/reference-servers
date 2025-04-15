@@ -1,0 +1,39 @@
+# omnimcp.ai configuration
+startCommand:
+  type: stdio
+configSchema:
+  type: object
+  properties:
+    MSF_PASSWORD:
+      type: string
+      description: "Password for the Metasploit RPC service."
+      required: true
+    MSF_SERVER:
+      type: string
+      description: "IP address of the Metasploit RPC server."
+      required: true
+    MSF_PORT:
+      type: integer
+      description: "Port number of the Metasploit RPC service."
+      required: true
+    MSF_SSL:
+      type: boolean
+      description: "Flag to determine if SSL is used for the Metasploit connection."
+      required: true
+commandFunction:
+  |- 
+  (config) => ({
+    "command": "uv",
+    "args": [
+      "--directory",
+      "C:\\path\\to\\MetasploitMCP",
+      "run",
+      "MetasploitMCP.py"
+    ],
+    "env": {
+      "MSF_PASSWORD": config.MSF_PASSWORD,
+      "MSF_SERVER": config.MSF_SERVER,
+      "MSF_PORT": config.MSF_PORT.toString(),
+      "MSF_SSL": config.MSF_SSL ? "true" : "false"
+    }
+  })

@@ -1,35 +1,35 @@
 # omnimcp.ai configuration
 startCommand:
   type: stdio
-configSchema:
-  type: object
-  properties:
-    JIRA_INSTANCE_URL:
-      type: string
-      description: The URL of your JIRA instance.
-      minLength: 1
-    JIRA_API_KEY:
-      type: string
-      description: Your JIRA API key/token.
-      minLength: 1
-    JIRA_USER_EMAIL:
-      type: string
-      description: The email associated with your JIRA account.
-      minLength: 1
-  required:
-    - JIRA_INSTANCE_URL
-    - JIRA_API_KEY
-    - JIRA_USER_EMAIL
-commandFunction:
-  |-
-  (config) => ({
-    "command": "npm",
-    "args": [
-      "start"
-    ],
-    "env": {
-      "JIRA_INSTANCE_URL": config.JIRA_INSTANCE_URL,
-      "JIRA_API_KEY": config.JIRA_API_KEY,
-      "JIRA_USER_EMAIL": config.JIRA_USER_EMAIL
-    }
-  })
+  configSchema:
+    type: object
+    properties:
+      JIRA_INSTANCE_URL:
+        type: string
+        description: The URL of your JIRA instance.
+        minLength: 1
+      JIRA_API_KEY:
+        type: string
+        description: Your JIRA API key/token.
+        minLength: 1
+      JIRA_USER_EMAIL:
+        type: string
+        description: The email associated with your JIRA account.
+        minLength: 1
+    required:
+      - JIRA_INSTANCE_URL
+      - JIRA_API_KEY
+      - JIRA_USER_EMAIL
+  commandFunction:
+    |-
+    (config) => ({
+      "command": "npm",
+      "args": [
+        "start"
+      ],
+      "env": {
+        "JIRA_INSTANCE_URL": config.JIRA_INSTANCE_URL,
+        "JIRA_API_KEY": config.JIRA_API_KEY,
+        "JIRA_USER_EMAIL": config.JIRA_USER_EMAIL
+      }
+    })

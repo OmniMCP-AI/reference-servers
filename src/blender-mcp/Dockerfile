@@ -8,6 +8,9 @@ WORKDIR /app
 RUN apt-get update && apt-get install -y \
     curl && \
     curl -fsSL https://astral.sh/uv/install.sh | sh && \
+    # 添加这一行，确保 uv 在 PATH 中
+    ln -s /root/.cargo/bin/uv /usr/local/bin/uv && \
+    ln -s /root/.cargo/bin/uvx /usr/local/bin/uvx && \
     rm -rf /var/lib/apt/lists/*
 
 COPY src/blender_mcp /app/blender_mcp

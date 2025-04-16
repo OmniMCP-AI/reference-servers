@@ -1,23 +1,20 @@
-# Use an official Node.js runtime as a parent image
-FROM node:16-alpine
+# Use an official Node.js runtime as the base image
+FROM node:16
 
-# Set the working directory
+# Set the working directory in the container
 WORKDIR /usr/src/app
 
-# Copy package.json and package-lock.json
+# Copy the package.json and package-lock.json files to the container
 COPY package*.json ./
 
-# Install the dependencies
+# Install project dependencies
 RUN npm install
 
-# Copy the rest of the application code
+# Copy the entire project files into the container
 COPY . .
 
-# Expose the application port
+# Expose the port the application will run on
 EXPOSE 8787
 
-# Provide a default command to run the application
+# Set the command to start the application
 CMD ["npx", "nx", "dev", "remote-mcp-server"]
-
-# Add a comment to indicate this image is intended for development
-# To deploy, use Cloudflare Workers with `npx wrangler`

@@ -1,4 +1,7 @@
 # omnimcp.ai configuration
+build:
+  dockerBuildPath: ../../
+
 startCommand:
   type: stdio
 configSchema:

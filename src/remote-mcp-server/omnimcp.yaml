@@ -1,32 +1,32 @@
 # omnimcp.ai configuration
 startCommand:
   type: stdio
-configSchema:
-  type: object
-  properties:
-    oauthKVNamespaceID:
-      type: string
-      description: "KV Namespace ID for OAuth, required for Cloudflare deployment."
-      minLength: 1
-    port:
-      type: integer
-      description: "Port to run the local server on."
-      minimum: 1
-    nodeEnv:
-      type: string
-      description: "Node environment setting, e.g., 'development' or 'production'."
-      enum: ["development", "production"]
-  required: ["oauthKVNamespaceID", "port", "nodeEnv"]
-commandFunction:
-  |- 
-  (config) => ({
-    command: "node",
-    args: [
-      "dist/index.js"
-    ],
-    env: {
-      "OAUTH_KV_NAMESPACE_ID": config.oauthKVNamespaceID,
-      "PORT": config.port.toString(),
-      "NODE_ENV": config.nodeEnv,
-    }
-  })
+  configSchema:
+    type: object
+    properties:
+      oauthKVNamespaceID:
+        type: string
+        description: "KV Namespace ID for OAuth, required for Cloudflare deployment."
+        minLength: 1
+      port:
+        type: integer
+        description: "Port to run the local server on."
+        minimum: 1
+      nodeEnv:
+        type: string
+        description: "Node environment setting, e.g., 'development' or 'production'."
+        enum: ["development", "production"]
+    required: ["oauthKVNamespaceID", "port", "nodeEnv"]
+  commandFunction:
+    |- 
+    (config) => ({
+      command: "node",
+      args: [
+        "dist/index.js"
+      ],
+      env: {
+        "OAUTH_KV_NAMESPACE_ID": config.oauthKVNamespaceID,
+        "PORT": config.port.toString(),
+        "NODE_ENV": config.nodeEnv,
+      }
+    })

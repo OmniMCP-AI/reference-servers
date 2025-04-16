@@ -10,11 +10,8 @@ RUN apt-get update && apt-get install -y \
     curl -fsSL https://astral.sh/uv/install.sh | sh && \
     rm -rf /var/lib/apt/lists/*
 
-# Copy the MCP Server files into the working directory
-COPY ./src/blender_mcp /app/blender_mcp
-
-# Copy the Blender Addon file
-COPY ./addon.py /app/addon.py
+COPY src/blender_mcp /app/blender_mcp
+COPY addon.py /app/addon.py
 
 # Start the MCP server
 CMD ["uvx", "blender-mcp"]

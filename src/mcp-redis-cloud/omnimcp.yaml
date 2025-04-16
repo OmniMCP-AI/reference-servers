@@ -1,28 +1,28 @@
 # omnimcp.ai configuration
 startCommand:
   type: stdio
-configSchema:
-  type: object
-  properties:
-    API_KEY:
-      type: string
-      description: "Redis Cloud API Key"
-      minLength: 1
-    SECRET_KEY:
-      type: string
-      description: "Redis Cloud API Secret Key"
-      minLength: 1
-  required: ["API_KEY", "SECRET_KEY"]
-commandFunction:
-  |-
-  (config) => ({
-    "command": "node",
-    "args": [
-      "--experimental-fetch",
-      "dist/index.js"
-    ],
-    "env": {
-      "API_KEY": config.API_KEY,
-      "SECRET_KEY": config.SECRET_KEY
-    }
-  })
+  configSchema:
+    type: object
+    properties:
+      API_KEY:
+        type: string
+        description: "Redis Cloud API Key"
+        minLength: 1
+      SECRET_KEY:
+        type: string
+        description: "Redis Cloud API Secret Key"
+        minLength: 1
+    required: ["API_KEY", "SECRET_KEY"]
+  commandFunction:
+    |-
+    (config) => ({
+      "command": "node",
+      "args": [
+        "--experimental-fetch",
+        "dist/index.js"
+      ],
+      "env": {
+        "API_KEY": config.API_KEY,
+        "SECRET_KEY": config.SECRET_KEY
+      }
+    })

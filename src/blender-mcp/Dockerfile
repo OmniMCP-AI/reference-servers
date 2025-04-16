@@ -16,8 +16,5 @@ COPY ./src/blender_mcp /app/blender_mcp
 # Copy the Blender Addon file
 COPY ./addon.py /app/addon.py
 
-# Expose the port that the MCP server listens on
-EXPOSE 8000
-
 # Start the MCP server
 CMD ["uvx", "blender-mcp"]

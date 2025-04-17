@@ -1,28 +1,31 @@
-# omnimcp.ai configuration
+# Smithery configuration file: https://smithery.ai/docs/config#smitheryyaml
+
 startCommand:
   type: stdio
   configSchema:
+    # JSON Schema defining the configuration options for the MCP.
     type: object
-    properties:
-      YOUTUBE_API_KEY:
-        type: string
-        description: "YouTube Data API key"
-        minLength: 1
-        required: true
-      YOUTUBE_TRANSCRIPT_LANG:
-        type: string
-        description: "Default caption language"
-        default: "ko"
     required:
-      - YOUTUBE_API_KEY
-  commandFunction: |-
+      - youtubeApiKey
+    properties:
+      youtubeApiKey:
+        type: string
+        description: YouTube Data API key for accessing the YouTube API.
+      youtubeTranscriptLang:
+        type: string
+        default: en
+        description: Default transcript language. Defaults to 'en'.
+  commandFunction:
+    # A JS function that produces the CLI command based on the given config to start the MCP on stdio.
+    |-
     (config) => ({
-      command: "node",
-      args: [
-        "dist/index.js"
-      ],
+      command: 'node',
+      args: ['dist/index.js'],
       env: {
-        YOUTUBE_API_KEY: config.YOUTUBE_API_KEY,
-        YOUTUBE_TRANSCRIPT_LANG: config.YOUTUBE_TRANSCRIPT_LANG || "ko"
+        YOUTUBE_API_KEY: config.youtubeApiKey,
+        YOUTUBE_TRANSCRIPT_LANG: config.youtubeTranscriptLang || 'en'
       }
     })
+  exampleConfig:
+    youtubeApiKey: YOUR_YOUTUBE_API_KEY_HERE
+    youtubeTranscriptLang: en

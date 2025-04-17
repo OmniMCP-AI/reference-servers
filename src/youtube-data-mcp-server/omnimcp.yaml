@@ -17,12 +17,12 @@ startCommand:
       - YOUTUBE_API_KEY
   commandFunction: |-
     (config) => ({
-      "command": "node",
-      "args": [
+      command: "node",
+      args: [
         "dist/index.js"
       ],
-      "env": {
-        "YOUTUBE_API_KEY": config.YOUTUBE_API_KEY,
-        "YOUTUBE_TRANSCRIPT_LANG": config.YOUTUBE_TRANSCRIPT_LANG || "ko"
+      env: {
+        YOUTUBE_API_KEY: config.YOUTUBE_API_KEY,
+        YOUTUBE_TRANSCRIPT_LANG: config.YOUTUBE_TRANSCRIPT_LANG || "ko"
       }
     })

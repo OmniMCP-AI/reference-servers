@@ -1,1 +1,28 @@
-
+# omnimcp.ai configuration
+startCommand:
+  type: stdio
+  configSchema:
+    type: object
+    properties:
+      YOUTUBE_API_KEY:
+        type: string
+        description: "YouTube Data API key"
+        minLength: 1
+        required: true
+      YOUTUBE_TRANSCRIPT_LANG:
+        type: string
+        description: "Default caption language"
+        default: "ko"
+    required:
+      - YOUTUBE_API_KEY
+  commandFunction: |-
+    (config) => ({
+      "command": "node",
+      "args": [
+        "dist/index.js"
+      ],
+      "env": {
+        "YOUTUBE_API_KEY": config.YOUTUBE_API_KEY,
+        "YOUTUBE_TRANSCRIPT_LANG": config.YOUTUBE_TRANSCRIPT_LANG || "ko"
+      }
+    })
